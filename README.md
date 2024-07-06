@@ -1,4 +1,4 @@
-# swipe-and-swap
+# Swipe and Swap
 Final Project of Ironhack Backend Web Development Bootcamp
 
 ### Description of the project:
@@ -15,7 +15,7 @@ Java, MySQL, SpringBoot, Postman
 ### Controllers and Routes Structure:
 
 ### Extra links:
-Trello Board: https://trello.com/b/IhTf7nWp/swap-it
+Trello Board: https://trello.com/b/IhTf7nWp/swipe-and-swap
 
 ### Future Work:
 
