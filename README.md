@@ -1,4 +1,4 @@
-# swap-it
+# swipe-and-swap
 Final Project of Ironhack Backend Web Development Bootcamp
 
 ### Description of the project:
