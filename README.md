@@ -10,10 +10,12 @@ A secondhand item exchange application with matching algorithm. Users will list 
 ### Setup:
 
 ### Technologies Used:
+Java, MySQL, SpringBoot, Postman
 
 ### Controllers and Routes Structure:
 
 ### Extra links:
+Trello Board: https://trello.com/b/IhTf7nWp/swap-it
 
 ### Future Work:
 
