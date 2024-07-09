@@ -7,6 +7,9 @@ A secondhand item exchange application with matching algorithm. Users will list 
 ### Class Diagram:
 ![Takasla](https://github.com/serhat-krk/swap-it/assets/167627660/f522d1e7-31e3-4711-bf7f-00e44e169a5e)
 
+### Use Case Diagram:
+![Swipe and Swap - Use Case Digram](https://github.com/serhat-krk/swipe-and-swap/assets/167627660/bd012eae-a6e3-4644-bb85-cbbb1925965c)
+
 ### Setup:
 
 ### Technologies Used:
