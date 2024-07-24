@@ -1,11 +1,11 @@
-package com.ironhack.swipeandswap.demo;
+package com.ironhack.swapit.demo;
 
-import com.ironhack.swipeandswap.enums.ItemCategory;
-import com.ironhack.swipeandswap.enums.ItemCondition;
-import com.ironhack.swipeandswap.model.Item;
-import com.ironhack.swipeandswap.model.User;
-import com.ironhack.swipeandswap.service.ItemService;
-import com.ironhack.swipeandswap.service.UserService;
+import com.ironhack.swapit.enums.ItemCategory;
+import com.ironhack.swapit.enums.ItemCondition;
+import com.ironhack.swapit.model.Item;
+import com.ironhack.swapit.model.User;
+import com.ironhack.swapit.service.ItemService;
+import com.ironhack.swapit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;

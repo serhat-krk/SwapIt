@@ -1,6 +1,6 @@
-package com.ironhack.swipeandswap.repository;
+package com.ironhack.swapit.repository;
 
-import com.ironhack.swipeandswap.model.Item;
+import com.ironhack.swapit.model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

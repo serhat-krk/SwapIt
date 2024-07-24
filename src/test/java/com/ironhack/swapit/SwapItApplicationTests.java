@@ -1,10 +1,10 @@
-package com.ironhack.swipeandswap;
+package com.ironhack.swapit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SwipeAndSwapApplicationTests {
+class SwapItApplicationTests {
 
     @Test
     void contextLoads() {

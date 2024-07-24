@@ -1,4 +1,4 @@
-package com.ironhack.swipeandswap.model;
+package com.ironhack.swapit.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

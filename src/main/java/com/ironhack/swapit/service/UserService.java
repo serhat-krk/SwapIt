@@ -1,7 +1,7 @@
-package com.ironhack.swipeandswap.service;
+package com.ironhack.swapit.service;
 
-import com.ironhack.swipeandswap.model.User;
-import com.ironhack.swipeandswap.repository.UserRepository;
+import com.ironhack.swapit.model.User;
+import com.ironhack.swapit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

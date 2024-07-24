@@ -1,7 +1,7 @@
-package com.ironhack.swipeandswap.controller;
+package com.ironhack.swapit.controller;
 
-import com.ironhack.swipeandswap.model.Item;
-import com.ironhack.swipeandswap.service.ItemService;
+import com.ironhack.swapit.model.Item;
+import com.ironhack.swapit.service.ItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

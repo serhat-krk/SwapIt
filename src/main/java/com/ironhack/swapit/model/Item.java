@@ -1,7 +1,7 @@
-package com.ironhack.swipeandswap.model;
+package com.ironhack.swapit.model;
 
-import com.ironhack.swipeandswap.enums.ItemCategory;
-import com.ironhack.swipeandswap.enums.ItemCondition;
+import com.ironhack.swapit.enums.ItemCategory;
+import com.ironhack.swapit.enums.ItemCondition;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
