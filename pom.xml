@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ironhack</groupId>
-    <artifactId>SwipeAndSwap</artifactId>
+    <artifactId>SwapIt</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>SwipeAndSwap</name>
     <description>SwipeAndSwap</description>

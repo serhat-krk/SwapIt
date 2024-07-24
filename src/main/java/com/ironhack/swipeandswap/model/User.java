@@ -10,10 +10,11 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "users")
+@Table (name = "users")
 public class User {
 
     // Properties
+
     @Id
     @GeneratedValue
     private UUID userId;
@@ -24,7 +25,7 @@ public class User {
     @Column
     private String city;
 
-    @ManyToMany
+    @ManyToMany // A user can like many items, an item can be liked by many users
     private List<Item> likedItems;
 
 

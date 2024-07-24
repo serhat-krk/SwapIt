@@ -1,12 +1,14 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/swapit_db
+    url: jdbc:mysql://localhost:3306/swap_db
     username: root
     password: root1234
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
+  profiles:
+    active: load_demo_data
 server:
   error:
     include-stacktrace: never
