@@ -3,8 +3,10 @@ package com.ironhack.swapit.demo;
 import com.ironhack.swapit.enums.ItemCategory;
 import com.ironhack.swapit.enums.ItemCondition;
 import com.ironhack.swapit.model.Item;
+import com.ironhack.swapit.model.Role;
 import com.ironhack.swapit.model.User;
 import com.ironhack.swapit.service.ItemService;
+import com.ironhack.swapit.service.RoleService;
 import com.ironhack.swapit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -19,10 +21,16 @@ public class DataLoader implements CommandLineRunner {
     // Service Instantiation
     private final ItemService itemService;
     private final UserService userService;
+    private final RoleService roleService;
 
 
     @Override
     public void run(String... args) throws Exception {
+
+
+        // Demo Roles
+        roleService.save(new Role("ROLE_USER"));
+        roleService.save(new Role("ROLE_ADMIN"));
 
 
         // Demo Users
@@ -30,8 +38,16 @@ public class DataLoader implements CommandLineRunner {
         userService.save(demoUser1);
         var demoUser2 = new User("demouser2", "1234", "Joe", "Cole", "London");
         userService.save(demoUser2);
-        var demoUser3 = new User("demouser3", "1234", "Haley", "Strong", "Austin");
+        var demoUser3 = new User("demouser3", "1234", "Hailey", "Strong", "Austin");
         userService.save(demoUser3);
+        var demoUserAdmin = new User("demouseradmin", "1234", "Chris", "River", "Berlin");
+        userService.save(demoUserAdmin);
+
+        // Add Roles
+        roleService.addRoleToUser("demouser1", "ROLE_USER");
+        roleService.addRoleToUser("demouser2", "ROLE_USER");
+        roleService.addRoleToUser("demouser3", "ROLE_USER");
+        roleService.addRoleToUser("demouseradmin", "ROLE_ADMIN");
 
 
         // Demo Items

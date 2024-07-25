@@ -10,19 +10,14 @@ public interface UserService {
 
     // GET methods
     List<User> findAll();
-
     Optional<User> findById(UUID id);
-
 
     // POST methods
     User save(User user);
 
-
     // PUT methods
 
-
     // PATCH methods
-
 
     // DELETE methods
 

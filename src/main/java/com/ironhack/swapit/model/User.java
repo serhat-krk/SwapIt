@@ -4,8 +4,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
+
+import static jakarta.persistence.FetchType.EAGER;
 
 @Entity
 @Data
@@ -15,7 +19,7 @@ public class User {
 
     // Properties
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID userId;
 
     @Column
@@ -40,7 +44,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private Set<Item> likedItems;
 
-
+    @ManyToMany(fetch = EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Collection<Role> roles = new ArrayList<>();
 
 
     // Custom constructor without liked items

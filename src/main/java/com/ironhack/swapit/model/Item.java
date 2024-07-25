@@ -15,7 +15,7 @@ import java.util.UUID;
 @Table(name = "items")
 public class Item {
 
-    // properties
+    // Properties
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID itemId;
