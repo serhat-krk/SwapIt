@@ -22,6 +22,9 @@ public class User {
     private String username;
 
     @Column
+    private String password;
+
+    @Column
     private String firstName;
 
     @Column
@@ -38,9 +41,12 @@ public class User {
     private Set<Item> likedItems;
 
 
+
+
     // Custom constructor without liked items
-    public User(String username, String firstName, String lastName, String city) {
+    public User(String username, String password, String firstName, String lastName, String city) {
         this.username = username;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.city = city;

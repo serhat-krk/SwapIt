@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("items")
+@RequestMapping("/api/items")
 @RequiredArgsConstructor
 public class ItemController {
 

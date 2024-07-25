@@ -26,11 +26,11 @@ public class DataLoader implements CommandLineRunner {
 
 
         // Demo Users
-        var demoUser1 = new User("demouser1", "Albert", "Smith", "Madrid");
+        var demoUser1 = new User("demouser1", "1234", "Albert", "Smith", "Madrid");
         userService.save(demoUser1);
-        var demoUser2 = new User("demouser2", "Joe", "Cole", "London");
+        var demoUser2 = new User("demouser2", "1234", "Joe", "Cole", "London");
         userService.save(demoUser2);
-        var demoUser3 = new User("demouser3", "Haley", "Strong", "Austin");
+        var demoUser3 = new User("demouser3", "1234", "Haley", "Strong", "Austin");
         userService.save(demoUser3);
 
 
