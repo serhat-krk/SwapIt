@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
 
+    // TODO: Find out what is the usage of this method
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Retrieve user with the given username
@@ -48,17 +49,39 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     // GET methods
 
+    @Override
     public List<User> findAll() {
+        log.info("Fetching all users");
         return userRepository.findAll();
     }
 
+    @Override
     public Optional<User> findById(UUID id) {
         return userRepository.findById(id);
     }
 
+    @Override
+    public User findByUsername(String username) {
+        // Retrieve user with the given username
+        User user = userRepository.findByUsername(username);
+        // Check if user exists
+        if (user == null) {
+            log.error("User not found in the database");
+            throw new UsernameNotFoundException("User not found in the database");
+        }
+        else {
+            log.info("User found in the database: {}", username);
+        return user;
+        }
+    }
+
     // POST methods
 
+    @Override
     public User save(User user) {
+        log.info("Saving new user {} to the database", user.getUsername());
+        // Encode teh user's password for security before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -70,4 +93,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     // DELETE methods
+
 }
