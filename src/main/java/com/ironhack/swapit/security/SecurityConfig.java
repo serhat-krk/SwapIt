@@ -63,6 +63,7 @@ public class SecurityConfig {
                 .requestMatchers("api/register").permitAll()
 
                 // TODO: Add role based requests here
+                .requestMatchers(GET, "/api/users/**").hasAnyAuthority("ROLE_ADMIN")
 
                 // Any other endpoint requires authentication
                 .anyRequest().authenticated());

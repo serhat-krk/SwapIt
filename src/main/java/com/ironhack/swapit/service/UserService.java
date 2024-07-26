@@ -10,7 +10,6 @@ public interface UserService {
 
     // GET methods
     List<User> findAll();
-    Optional<User> findById(UUID id);
     User findByUsername(String username);
 
     // POST methods

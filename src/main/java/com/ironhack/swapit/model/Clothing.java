@@ -2,10 +2,7 @@ package com.ironhack.swapit.model;
 
 import com.ironhack.swapit.enums.ClothingCategory;
 import com.ironhack.swapit.enums.ItemCondition;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -14,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Table(name = "clothings")
 public class Clothing extends Item {
 
     // Properties

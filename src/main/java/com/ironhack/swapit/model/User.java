@@ -22,7 +22,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID userId;
 
-    @Column
+    @Column(unique = true)
     private String username;
 
     @Column
@@ -39,7 +39,7 @@ public class User {
 
     @ManyToMany // A user can like many items, an item can be liked by many users
     @JoinTable(
-            name = "item_like",
+            name = "item_likes",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private Set<Item> likedItems;
