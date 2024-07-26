@@ -1,6 +1,5 @@
 package com.ironhack.swapit.model;
 
-import com.ironhack.swapit.enums.ItemCategory;
 import com.ironhack.swapit.enums.ItemCondition;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -9,11 +8,14 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 import java.util.UUID;
 
+import static jakarta.persistence.InheritanceType.*;
+
 @Entity
 @Data
 @NoArgsConstructor
+@Inheritance(strategy = JOINED)
 @Table(name = "items")
-public class Item {
+public abstract class Item {
 
     // Properties
     @Id
@@ -26,11 +28,7 @@ public class Item {
     @Column
     private String description;
 
-    @Enumerated (EnumType.STRING)
-    @Column(name = "item_category")
-    private ItemCategory category;
-
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column(name = "item_condition")
     private ItemCondition condition;
 
@@ -42,17 +40,15 @@ public class Item {
 
 
     // Custom Constructors
-    public Item(String title, ItemCategory category, ItemCondition condition, User owner) {
+    public Item(String title, ItemCondition condition, User owner) {
         this.title = title;
-        this.category = category;
         this.condition = condition;
         this.owner = owner;
     }
 
-    public Item(String title, String description, ItemCategory category, ItemCondition condition, User owner) {
+    public Item(String title, String description, ItemCondition condition, User owner) {
         this.title = title;
         this.description = description;
-        this.category = category;
         this.condition = condition;
         this.owner = owner;
     }

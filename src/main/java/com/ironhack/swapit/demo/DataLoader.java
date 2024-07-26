@@ -1,10 +1,9 @@
 package com.ironhack.swapit.demo;
 
-import com.ironhack.swapit.enums.ItemCategory;
+import com.ironhack.swapit.enums.BookGenre;
+import com.ironhack.swapit.enums.ClothingCategory;
 import com.ironhack.swapit.enums.ItemCondition;
-import com.ironhack.swapit.model.Item;
-import com.ironhack.swapit.model.Role;
-import com.ironhack.swapit.model.User;
+import com.ironhack.swapit.model.*;
 import com.ironhack.swapit.service.ItemService;
 import com.ironhack.swapit.service.RoleService;
 import com.ironhack.swapit.service.UserService;
@@ -51,35 +50,39 @@ public class DataLoader implements CommandLineRunner {
 
 
         // Demo Items
-        var demoItem1 = new Item(
+        var demoItem1 = new Clothing(
                 "Adidas Gazelle Men Shoes 43 Grey",
                 "Only worn a few times. It's in good condition. It has a small yellow mark on the left side of the right foot.",
-                ItemCategory.CLOTHES,
                 ItemCondition.USED,
-                demoUser1);
+                demoUser1,
+                ClothingCategory.MEN,
+                "43");
         itemService.save(demoItem1);
 
-        var demoItem2 = new Item(
-                "Ikea MARKUS Black Office Chair",
-                ItemCategory.CLOTHES,
+        var demoItem2 = new Clothing(
+                "Levi's 501 Black Jeans W32 L34",
                 ItemCondition.USED,
-                demoUser2);
+                demoUser2,
+                ClothingCategory.MEN,
+                "W32 L34");
         itemService.save(demoItem2);
 
-        var demoItem3 = new Item(
-                "Sony WF-C500 Earphones White UNOPENED",
-                "I received as a gift and didn't open the box",
-                ItemCategory.ELECTRONICS,
+        var demoItem3 = new Book(
+                "Game of Thrones",
+                "I received as a gift and didn't open the cover",
                 ItemCondition.NOT_USED,
-                demoUser3);
+                demoUser3,
+                "George R. R. Martin",
+                BookGenre.FANTASY);
         itemService.save(demoItem3);
 
-        var demoItem4 = new Item(
-                "Sapiens - Yuval Noah Harari",
+        var demoItem4 = new Book(
+                "Sapiens",
                 "No notes, no missing pages, in good condition",
-                ItemCategory.BOOKS,
                 ItemCondition.USED,
-                demoUser3);
+                demoUser3,
+                "Yuval Noah Harari",
+                BookGenre.HISTORY);
         itemService.save(demoItem4);
 
     }
