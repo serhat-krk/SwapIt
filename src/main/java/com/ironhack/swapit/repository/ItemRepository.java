@@ -27,5 +27,5 @@ public interface ItemRepository extends JpaRepository <Item, Integer> {
             "ORDER BY RAND() " +
             "LIMIT 1",
             nativeQuery = true)
-    Item findRandomItemToSwap(@Param("username") String username);
+    Item findRandomItem(@Param("username") String username);
 }

@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.EnumType.*;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -18,7 +20,7 @@ public class Book extends Item {
     private String author;
 
     @Column
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private BookGenre genre;
 
 

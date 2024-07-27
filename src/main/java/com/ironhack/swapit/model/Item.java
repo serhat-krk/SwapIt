@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 import java.util.UUID;
 
+import static jakarta.persistence.EnumType.*;
+import static jakarta.persistence.GenerationType.*;
 import static jakarta.persistence.InheritanceType.*;
 
 @Entity
@@ -19,7 +21,7 @@ public abstract class Item {
 
     // Properties
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private int itemId;
 
     @Column
@@ -28,7 +30,7 @@ public abstract class Item {
     @Column
     private String description;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     @Column(name = "item_condition")
     private ItemCondition condition;
 

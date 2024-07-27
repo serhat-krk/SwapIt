@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.EnumType.*;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -15,7 +17,7 @@ public class Clothing extends Item {
 
     // Properties
     @Column
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private ClothingCategory category;
 
     @Column

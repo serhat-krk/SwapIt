@@ -22,6 +22,7 @@ public class RoleServiceImpl implements RoleService {
 
 
     // GET Methods
+    @Override
     public List<Role> findAll() {
         log.info("Getting all roles");
         return roleRepository.findAll();

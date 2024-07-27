@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static jakarta.persistence.FetchType.EAGER;
+import static jakarta.persistence.GenerationType.*;
 
 @Entity
 @Data
@@ -19,7 +20,7 @@ public class User {
 
     // Properties
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = UUID)
     private UUID userId;
 
     @Column(unique = true)

@@ -1,6 +1,7 @@
 package com.ironhack.swapit.service;
 
 import com.ironhack.swapit.model.Item;
+import com.ironhack.swapit.model.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,7 @@ public interface ItemService {
     List<Item> findAll();
     Optional<Item> findById(int id);
     List<Item> findUserItems(String username);
-    Item findRandomItemToSwap(String username);
+    Item findRandomItem(String username);
 
     // POST methods
     Item save(Item item);
@@ -20,6 +21,7 @@ public interface ItemService {
     // PUT methods
 
     // PATCH methods
+    void like(User user, Item item);
 
     // DELETE methods
 

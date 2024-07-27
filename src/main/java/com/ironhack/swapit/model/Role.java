@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.*;
 
 @Entity
 @Data
@@ -20,7 +21,7 @@ public class Role {
 
     // Properties
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private int id;
 
     private String name;
