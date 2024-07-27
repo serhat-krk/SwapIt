@@ -34,6 +34,7 @@ public class ItemController {
     @GetMapping("/user/{username}")
     public List<Item> getByUser(@PathVariable("username") String username) {
         return itemService.findUserItems(username);
+        // TODO: access security context, get username, match usernames. If no, throw unauthorizedException 403
     }
 
 

@@ -12,12 +12,7 @@ import java.util.UUID;
 @Repository
 public interface ItemRepository extends JpaRepository <Item, Integer> {
 
-    @Query(value = "SELECT * " +
-            "FROM swap_db.items i " +
-            "JOIN swap_db.users u ON i.owner_user_id = u.user_id " +
-            "WHERE u.username = :username",
-            nativeQuery = true)
-    List<Item> findUserItems(@Param("username") String username);
+    List<Item> findItemByOwner_Username(String username);
 
     @Query(value = "SELECT * " +
             "FROM swap_db.items i " +
@@ -28,4 +23,5 @@ public interface ItemRepository extends JpaRepository <Item, Integer> {
             "LIMIT 1",
             nativeQuery = true)
     Item findRandomItem(@Param("username") String username);
+
 }

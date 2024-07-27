@@ -31,7 +31,7 @@ public class ItemServiceImpl implements ItemService {
     // To get all items of a user
     @Override
     public List<Item> findUserItems(String username) {
-        return itemRepository.findUserItems(username);
+        return itemRepository.findItemByOwner_Username(username);
     }
 
     // To find a random item that does not belong to user

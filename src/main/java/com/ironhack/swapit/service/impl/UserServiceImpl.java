@@ -77,6 +77,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         log.info("Saving new user {} to the database", user.getUsername());
         // Encode teh user's password for security before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // TODO: call role service to add ROLE_USER by default
         return userRepository.save(user);
     }
 
