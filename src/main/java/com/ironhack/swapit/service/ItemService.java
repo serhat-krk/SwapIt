@@ -10,7 +10,9 @@ public interface ItemService {
 
     // GET methods
     List<Item> findAll();
-    Optional<Item> findById(UUID id);
+    Optional<Item> findById(int id);
+    List<Item> findUserItems(String username);
+    Item findRandomItemToSwap(String username);
 
     // POST methods
     Item save(Item item);

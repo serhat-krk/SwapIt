@@ -13,14 +13,14 @@ import static jakarta.persistence.InheritanceType.*;
 @Entity
 @Data
 @NoArgsConstructor
-@Inheritance(strategy = JOINED)
+@Inheritance(strategy = SINGLE_TABLE)
 @Table(name = "items")
 public abstract class Item {
 
     // Properties
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID itemId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int itemId;
 
     @Column
     private String title;

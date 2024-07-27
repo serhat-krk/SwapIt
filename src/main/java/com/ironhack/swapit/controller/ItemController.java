@@ -26,9 +26,14 @@ public class ItemController {
         return itemService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Optional<Item> getById(@PathVariable("id") UUID id) {
-        return itemService.findById(id);
+//    @GetMapping("/{id}")
+//    public Optional<Item> getById(@PathVariable("id") int id) {
+//        return itemService.findById(id);
+//    }
+
+    @GetMapping("/{username}")
+    public List<Item> getByUser(@PathVariable("username") String username) {
+        return itemService.findUserItems(username);
     }
 
 

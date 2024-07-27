@@ -85,5 +85,21 @@ public class DataLoader implements CommandLineRunner {
                 BookGenre.HISTORY);
         itemService.save(demoItem4);
 
+        var demoItem5 = new Book(
+                "Hobbit",
+                ItemCondition.USED,
+                demoUser3,
+                "J. R. R. Tolkien",
+                BookGenre.FANTASY);
+        itemService.save(demoItem5);
+
+        var demoItem6 = new Book(
+                "Dune",
+                ItemCondition.NOT_USED,
+                demoUser2,
+                "Frank Herbert",
+                BookGenre.SCIENCE_FICTION);
+        itemService.save(demoItem5);
+
     }
 }

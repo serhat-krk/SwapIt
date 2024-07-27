@@ -23,8 +23,18 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findAll();
     }
 
-    public Optional<Item> findById(UUID id) {
+    public Optional<Item> findById(int id) {
         return itemRepository.findById(id);
+    }
+
+    // To get all items of a user
+    public List<Item> findUserItems(String username) {
+        return itemRepository.findUserItems(username);
+    }
+
+    // To find a random item that does not belong to user
+    public Item findRandomItemToSwap(String username) {
+        return itemRepository.findRandomItemToSwap(username);
     }
 
 
