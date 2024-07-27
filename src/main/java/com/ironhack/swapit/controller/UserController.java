@@ -2,9 +2,13 @@ package com.ironhack.swapit.controller;
 
 import com.ironhack.swapit.model.User;
 import com.ironhack.swapit.service.UserService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +26,14 @@ public class UserController {
 
     // GET Mappings
     @GetMapping("/users")
+    @Secured("ROLE_ADMIN")
     public List<User> getAll() {
         return userService.findAll();
     }
 
+    // TODO: It doesn't work, fix it
     @GetMapping("/users/{username}")
+    @PreAuthorize("#username == authentication.principal.username or hasRole('ROLE_ADMIN')")
     public User getByUsername(@PathVariable("username") String username) {
         return userService.findByUsername(username);
     }

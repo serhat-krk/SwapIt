@@ -55,6 +55,7 @@ public class ItemServiceImpl implements ItemService {
      * @param user
      * @param item
      */
+    // TODO: IT DOESN'T WORK, FIX IT
     @Override
     public void like(User user, Item item) {
         Set<User> likedBy = item.getLikes();

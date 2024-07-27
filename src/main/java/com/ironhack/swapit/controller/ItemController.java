@@ -5,6 +5,7 @@ import com.ironhack.swapit.service.ItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +23,13 @@ public class ItemController {
 
     // GET Mappings
     @GetMapping
+    @Secured("ROLE_ADMIN")
     public List<Item> getAll() {
         return itemService.findAll();
     }
 
     @GetMapping("/id/{id}")
+    @Secured("ROLE_ADMIN")
     public Optional<Item> getById(@PathVariable("id") int id) {
         return itemService.findById(id);
     }
