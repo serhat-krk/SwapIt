@@ -64,6 +64,8 @@ public class SecurityConfig {
 
                 // TODO: Add role based requests here
                 .requestMatchers(GET, "/api/users/**").hasAnyAuthority("ROLE_ADMIN")
+                .requestMatchers(GET, "/api/roles").hasAnyAuthority("ROLE_ADMIN")
+                .requestMatchers(GET, "/api/roles/**").hasAnyAuthority("ROLE_ADMIN")
                 .requestMatchers(GET, "/api/items").hasAnyAuthority("ROLE_ADMIN")
                 .requestMatchers(GET, "/api/items/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                 .requestMatchers(GET, "/api/swap/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")

@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -19,7 +21,14 @@ public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
 
-    // Methods
+    // GET Methods
+    public List<Role> findAll() {
+        log.info("Getting all roles");
+        return roleRepository.findAll();
+    }
+
+
+    // POST Methods
     @Override
     public Role save(Role role) {
         log.info("Saving new role {} to the database", role.getName());
