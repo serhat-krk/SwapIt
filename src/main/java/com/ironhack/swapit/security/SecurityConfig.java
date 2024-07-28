@@ -65,8 +65,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests((requests) -> requests
 
             // Public endpoint for visitors
-            .requestMatchers("/api/login/**").permitAll()
-            .requestMatchers("api/register").permitAll()
+            .requestMatchers("/api/login").permitAll()
+            .requestMatchers("/api/register").permitAll()
 
             // Any other endpoint requires authentication
             .anyRequest().authenticated());

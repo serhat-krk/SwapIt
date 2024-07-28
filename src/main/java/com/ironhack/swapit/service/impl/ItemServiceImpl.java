@@ -21,7 +21,6 @@ public class ItemServiceImpl implements ItemService {
 
     // Repository Instantiation
     private final ItemRepository itemRepository;
-    private final UserRepository userRepository;
 
 
 // GET methods
@@ -42,12 +41,6 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findItemByOwner_Username(username);
     }
 
-    // To find a random item that does not belong to user
-    @Override
-    public Item findRandomItem(String username) {
-        return itemRepository.findRandomItem(username);
-    }
-
 
 // POST Methods
 
@@ -57,30 +50,6 @@ public class ItemServiceImpl implements ItemService {
     public Item save(Item item) {
         return itemRepository.save(item);
     }
-
-//    /**
-//     * add user to likedBy set variable of item
-//     * @param username
-//     * @param itemId
-//     */
-//    // TODO: IT DOESN'T WORK, FIX IT
-//    @Override
-//    public void like(String username, int itemId) {
-//
-//        // Retrieve the user and item objects from the repository
-//        User user = userRepository.findByUsername(username);
-//        Item item = itemRepository.findById(itemId).orElseThrow();
-//
-//        // Throw unauthorized error if user likes their own item
-//        if (item.getOwner().getUsername().equals(username))
-//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Users cannot like their own items");
-//
-//        // Add the user to the item's like set
-//        item.getLikedBy().add(user);
-//
-//        // Save the item to persist the changes
-//        itemRepository.save(item);
-//    }
 
 
 // Other Methods

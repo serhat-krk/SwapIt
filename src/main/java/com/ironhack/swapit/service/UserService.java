@@ -14,7 +14,6 @@ public interface UserService {
 
     // POST methods
     User save(User user);
-    void like(String username, int itemId);
 
     // PUT methods
 

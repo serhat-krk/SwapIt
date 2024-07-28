@@ -24,7 +24,6 @@ import java.util.*;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
-    private final ItemRepository itemRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -75,6 +74,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
+
 // POST methods
 
     @Override
@@ -84,29 +84,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         // TODO: call role service to add ROLE_USER by default
         return userRepository.save(user);
-    }
-
-    /**
-     * add item to likedItems set variable of user
-     * @param username
-     * @param itemId
-     */
-    @Override
-    public void like(String username, int itemId) {
-
-        // Retrieve the user and item objects from the repository
-        User user = userRepository.findByUsername(username);
-        Item item = itemRepository.findById(itemId).orElseThrow();
-
-        // Throw unauthorized error if user likes their own item
-        if (item.getOwner().getUsername().equals(username))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Users cannot like their own items");
-
-        // Add the item to the user's likedItems set
-        user.getLikedItems().add(item);
-
-        // Save the item to persist the changes
-        userRepository.save(user);
     }
 
 
