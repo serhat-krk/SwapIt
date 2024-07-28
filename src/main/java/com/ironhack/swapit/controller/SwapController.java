@@ -40,13 +40,20 @@ public class SwapController {
     }
 
 
-// PATCH Mappings
+// POST Mappings
 
-    @PatchMapping("/like")
+    @PostMapping("/like")
     public void like(@RequestBody LikeRequest likeRequest) {
-        Item likedItem = itemService.findById(likeRequest.getItemId()).orElseThrow();
-        User likerUser = userService.findByUsername(likeRequest.getUsername());
-        itemService.like(likerUser, likedItem);
+
+        // Find username of logged-in user
+//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // Find username and itemId from like request
+        String username = likeRequest.getUsername();
+        int itemId = likeRequest.getItemId();
+
+        // Add user to likedBy set of item
+        userService.like(username, itemId);
     }
 
 }

@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.GenerationType.*;
@@ -38,12 +35,12 @@ public class User {
     @Column
     private String city;
 
-    @ManyToMany // A user can like many items, an item can be liked by many users
+    @ManyToMany(fetch = EAGER) // A user can like many items, an item can be liked by many users
     @JoinTable(
             name = "item_likes",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<Item> likedItems;
+    private Set<Item> likedItems = new HashSet<>();
 
     @ManyToMany(fetch = EAGER)
     @JoinTable(

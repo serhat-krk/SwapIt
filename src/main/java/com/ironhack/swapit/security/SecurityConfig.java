@@ -68,9 +68,6 @@ public class SecurityConfig {
             .requestMatchers("/api/login/**").permitAll()
             .requestMatchers("api/register").permitAll()
 
-            // Role based request, currently moved to method based security, left following request commented for reference
-            // .requestMatchers(GET, "/api/items").hasAnyAuthority("ROLE_ADMIN")
-
             // Any other endpoint requires authentication
             .anyRequest().authenticated());
 

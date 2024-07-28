@@ -21,7 +21,6 @@ public interface ItemService {
     // PUT methods
 
     // PATCH methods
-    void like(User user, Item item);
 
     // DELETE methods
 

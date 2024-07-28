@@ -5,10 +5,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 import static jakarta.persistence.EnumType.*;
+import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;
 import static jakarta.persistence.InheritanceType.*;
 
@@ -37,8 +39,8 @@ public abstract class Item {
     @ManyToOne // A user can have many items, an item has one user only
     private User owner;
 
-    @ManyToMany(mappedBy = "likedItems")
-    private Set<User> likes;
+    @ManyToMany(mappedBy = "likedItems", fetch = LAZY)
+    private Set<User> likedBy = new HashSet<>();
 
 
     // Custom Constructors
