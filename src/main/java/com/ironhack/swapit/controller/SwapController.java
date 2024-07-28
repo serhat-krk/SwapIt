@@ -7,6 +7,8 @@ import com.ironhack.swapit.service.ItemService;
 import com.ironhack.swapit.service.MatchService;
 import com.ironhack.swapit.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,19 +21,27 @@ public class SwapController {
     private final UserService userService;
     private final MatchService matchService;
 
+// GET Mappings
 
     /**
-     * show a random item from other users
-     * @param username the operator
+     * Show a random item from other users, initial pathway to Like operation
      * @return a random item from other users
+     * @secured logged-in user
+     * TODO: add filters
      */
     @GetMapping
-    public Item getRandom(@RequestBody String username) {
+    public Item getRandom() {
+
+        // Find username of logged-in user
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // Return random item that does not belong to user
         return itemService.findRandomItem(username);
     }
 
 
-    // PATCH Methods
+// PATCH Mappings
+
     @PatchMapping("/like")
     public void like(@RequestBody LikeRequest likeRequest) {
         Item likedItem = itemService.findById(likeRequest.getItemId()).orElseThrow();

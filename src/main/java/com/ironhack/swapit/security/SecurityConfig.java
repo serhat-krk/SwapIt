@@ -2,12 +2,14 @@ package com.ironhack.swapit.security;
 
 import com.ironhack.swapit.security.filters.CustomAuthenticationFilter;
 import com.ironhack.swapit.security.filters.CustomAuthorizationFilter;
+import com.ironhack.swapit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +25,10 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 @Configuration
 @EnableWebSecurity // Indicates it is a security configuration class using spring web security
+@EnableMethodSecurity( // Enables us to put security configuration on method level in the controller
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -40,7 +46,7 @@ public class SecurityConfig {
 
     // Bean definition for SecurityFilterChain
     @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws  Exception {
+    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // CustomAuthenticationFilter instance created
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authManagerBuilder.getOrBuild());
 
@@ -58,20 +64,15 @@ public class SecurityConfig {
         // TODO: Update for new requests
         http.authorizeHttpRequests((requests) -> requests
 
-                // Public endpoint for visitors
-                .requestMatchers("/api/login/**").permitAll()
-                .requestMatchers("api/register").permitAll()
+            // Public endpoint for visitors
+            .requestMatchers("/api/login/**").permitAll()
+            .requestMatchers("api/register").permitAll()
 
-                // TODO: Add role based requests here
-                .requestMatchers(GET, "/api/users/**").hasAnyAuthority("ROLE_ADMIN")
-                .requestMatchers(GET, "/api/roles").hasAnyAuthority("ROLE_ADMIN")
-                .requestMatchers(GET, "/api/roles/**").hasAnyAuthority("ROLE_ADMIN")
-                .requestMatchers(GET, "/api/items").hasAnyAuthority("ROLE_ADMIN")
-                .requestMatchers(GET, "/api/items/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
-                .requestMatchers(GET, "/api/swap/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+            // Role based request, currently moved to method based security, left following request commented for reference
+            // .requestMatchers(GET, "/api/items").hasAnyAuthority("ROLE_ADMIN")
 
-                // Any other endpoint requires authentication
-                .anyRequest().authenticated());
+            // Any other endpoint requires authentication
+            .anyRequest().authenticated());
 
 
         // Add the custom authentication filter to the http security object

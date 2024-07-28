@@ -21,7 +21,8 @@ public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
 
-    // GET Methods
+// GET Methods
+
     @Override
     public List<Role> findAll() {
         log.info("Getting all roles");
@@ -29,7 +30,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
 
-    // POST Methods
+// POST Methods
+
     @Override
     public Role save(Role role) {
         log.info("Saving new role {} to the database", role.getName());

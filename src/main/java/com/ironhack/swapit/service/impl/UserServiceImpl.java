@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
-    // GET methods
+// GET methods
 
     @Override
     public List<User> findAll() {
@@ -70,24 +70,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
-    // POST methods
+// POST methods
 
     @Override
     public User save(User user) {
         log.info("Saving new user {} to the database", user.getUsername());
-        // Encode teh user's password for security before saving
+        // Encode the user's password for security before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         // TODO: call role service to add ROLE_USER by default
         return userRepository.save(user);
     }
 
 
-    // PUT methods
+// PUT methods
 
 
-    // PATCH methods
+// PATCH methods
 
 
-    // DELETE methods
+// DELETE methods
 
 }
