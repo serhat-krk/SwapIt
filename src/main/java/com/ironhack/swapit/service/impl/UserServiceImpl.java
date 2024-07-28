@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
-    // GET methods
+// GET methods
 
     @Override
     public List<User> findAll() {
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
-    // POST methods
+// POST methods
 
     @Override
     public User save(User user) {
@@ -82,12 +82,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
-    // PUT methods
+// PUT methods
 
 
-    // PATCH methods
+// PATCH methods
 
 
-    // DELETE methods
+// DELETE methods
 
 }

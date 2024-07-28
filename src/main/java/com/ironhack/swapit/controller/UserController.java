@@ -24,22 +24,25 @@ public class UserController {
     private final UserService userService;
 
 
-    // GET Mappings
+// GET Mappings
+
+    // Return list of all users, for admins
     @GetMapping("/users")
     @Secured("ROLE_ADMIN")
     public List<User> getAll() {
         return userService.findAll();
     }
 
-    // TODO: It doesn't work, fix it
+    // Return a user by username, for logged-in user or admins
     @GetMapping("/users/{username}")
-    @PreAuthorize("#username == authentication.principal.username or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("#username == authentication.principal or hasRole('ROLE_ADMIN')")
     public User getByUsername(@PathVariable("username") String username) {
         return userService.findByUsername(username);
     }
 
 
-    // POST Mappings
+// POST Mappings
+
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public User post(@RequestBody @Valid User user) {
@@ -47,12 +50,12 @@ public class UserController {
     }
 
 
-    // PUT Mappings
+// PUT Mappings
 
 
-    // PATCH Mappings
+// PATCH Mappings
 
 
-    // Delete Mappings
+// Delete Mappings
 
 }

@@ -2,6 +2,7 @@ package com.ironhack.swapit.security;
 
 import com.ironhack.swapit.security.filters.CustomAuthenticationFilter;
 import com.ironhack.swapit.security.filters.CustomAuthorizationFilter;
+import com.ironhack.swapit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +46,7 @@ public class SecurityConfig {
 
     // Bean definition for SecurityFilterChain
     @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws  Exception {
+    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // CustomAuthenticationFilter instance created
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authManagerBuilder.getOrBuild());
 

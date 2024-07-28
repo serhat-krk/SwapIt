@@ -19,15 +19,18 @@ public class MatchServiceImpl implements MatchService {
     private final MatchRepository matchRepository;
 
 
-    // GET Methods
+// GET Methods
+
     @Override
     public List<Match> findAll() {
         return matchRepository.findAll();
     }
 
-    // POST Methods
+// POST Methods
+
     @Override
     public Match save(Match match) {
         return matchRepository.save(match);
     }
+
 }

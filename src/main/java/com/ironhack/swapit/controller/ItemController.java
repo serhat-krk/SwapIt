@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,27 +22,32 @@ public class ItemController {
     private final ItemService itemService;
 
 
-    // GET Mappings
+// GET Mappings
+
+    // Return list of all items, for admins
     @GetMapping
     @Secured("ROLE_ADMIN")
     public List<Item> getAll() {
         return itemService.findAll();
     }
 
+    // Return an item by id, for the owner or admins
     @GetMapping("/id/{id}")
-    @Secured("ROLE_ADMIN")
-    public Optional<Item> getById(@PathVariable("id") int id) {
-        return itemService.findById(id);
+    @PreAuthorize("@itemServiceImpl.isOwner(#itemId) or hasRole('ROLE_ADMIN')")
+    public Optional<Item> getById(@PathVariable("id") int itemId) {
+        return itemService.findById(itemId);
     }
 
+    // Return all items of a user by username, for the owner or admins
     @GetMapping("/user/{username}")
+    @PreAuthorize("#username == authentication.principal or hasRole('ROLE_ADMIN')")
     public List<Item> getByUser(@PathVariable("username") String username) {
         return itemService.findUserItems(username);
-        // TODO: access security context, get username, match usernames. If no, throw unauthorizedException 403
     }
 
 
-    // POST Mappings
+// POST Mappings
+
     @PostMapping("/list")
     @ResponseStatus(HttpStatus.CREATED)
     public Item post(@RequestBody @Valid Item item) {
@@ -49,12 +55,12 @@ public class ItemController {
     }
 
 
-    // PUT Mappings
+// PUT Mappings
 
 
-    // PATCH Mappings
+// PATCH Mappings
 
 
-    // DELETE Mappings
+// DELETE Mappings
 
 }
