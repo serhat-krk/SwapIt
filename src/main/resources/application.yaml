@@ -12,6 +12,7 @@ spring:
 server:
   error:
     include-stacktrace: never
-
-
-#    gitmoji.dev
+logging:
+  level:
+    root: DEBUG
+    com.ironhack.swapit: DEBUG

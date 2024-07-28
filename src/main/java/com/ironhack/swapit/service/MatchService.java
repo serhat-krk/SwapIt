@@ -2,6 +2,7 @@ package com.ironhack.swapit.service;
 
 import com.ironhack.swapit.model.Item;
 import com.ironhack.swapit.model.Match;
+import com.ironhack.swapit.model.User;
 
 import java.util.List;
 
@@ -12,5 +13,6 @@ public interface MatchService {
 
 
     // POST Methods
-    Match save(Match match);
+    void createMatchIfMutualLike(User user1, User user2);
+
 }

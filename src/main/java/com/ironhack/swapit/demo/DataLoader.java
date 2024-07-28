@@ -103,7 +103,7 @@ public class DataLoader implements CommandLineRunner {
                 demoUser2,
                 "Frank Herbert",
                 SCIENCE_FICTION);
-        itemService.save(demoItem5);
+        itemService.save(demoItem6);
 
     }
 }

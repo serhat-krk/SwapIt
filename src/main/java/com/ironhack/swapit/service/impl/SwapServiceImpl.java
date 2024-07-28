@@ -6,6 +6,8 @@ import com.ironhack.swapit.repository.ItemRepository;
 import com.ironhack.swapit.repository.MatchRepository;
 import com.ironhack.swapit.repository.UserRepository;
 import com.ironhack.swapit.service.SwapService;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,8 @@ public class SwapServiceImpl implements SwapService {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
     private final MatchRepository matchRepository;
+
+    private final EntityManager entityManager;
 
 
 // Methods
@@ -39,6 +43,7 @@ public class SwapServiceImpl implements SwapService {
      * @param itemId
      */
     @Override
+    @Transactional
     public void like(String username, int itemId) {
 
         // Retrieve the user and item objects from the repository
@@ -50,6 +55,13 @@ public class SwapServiceImpl implements SwapService {
 
         // Save the item to persist the changes
         userRepository.save(user);
+
+        // Ensure that changes are flushed to the database
+        entityManager.flush();
+
+        // Clear the persistence context to avoid stale data
+        entityManager.clear();
+
     }
 
 
