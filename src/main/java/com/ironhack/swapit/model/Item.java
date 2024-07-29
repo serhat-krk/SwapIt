@@ -40,7 +40,7 @@ public abstract class Item {
     @ManyToOne // A user can have many items, an item has one user only
     private User owner;
 
-    @ManyToMany(mappedBy = "likedItems", fetch = LAZY)
+    @ManyToMany(mappedBy = "likedItems", fetch = EAGER)
     private Set<User> likedBy = new HashSet<>();
 
 

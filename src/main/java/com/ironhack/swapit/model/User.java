@@ -35,6 +35,9 @@ public class User {
     @Column
     private String city;
 
+    @OneToMany(mappedBy = "owner")
+    private Set<Item> ownedItems;
+
     @ManyToMany(fetch = EAGER) // A user can like many items, an item can be liked by many users
     @JoinTable(
             name = "item_likes",

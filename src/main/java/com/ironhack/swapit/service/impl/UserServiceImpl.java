@@ -5,6 +5,7 @@ import com.ironhack.swapit.model.User;
 import com.ironhack.swapit.repository.ItemRepository;
 import com.ironhack.swapit.repository.UserRepository;
 import com.ironhack.swapit.service.UserService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         else {
             log.info("User found in the database: {}", username);
-        return user;
+            return user;
         }
     }
 

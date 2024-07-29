@@ -24,7 +24,7 @@ public class SwapServiceImpl implements SwapService {
     private final ItemRepository itemRepository;
     private final MatchRepository matchRepository;
 
-    private final EntityManager entityManager;
+//    private final EntityManager entityManager;
 
 
 // Methods
@@ -56,11 +56,11 @@ public class SwapServiceImpl implements SwapService {
         // Save the item to persist the changes
         userRepository.save(user);
 
-        // Ensure that changes are flushed to the database
-        entityManager.flush();
-
-        // Clear the persistence context to avoid stale data
-        entityManager.clear();
+//        // Ensure that changes are flushed to the database
+//        entityManager.flush();
+//
+//        // Clear the persistence context to avoid stale data
+//        entityManager.clear();
 
     }
 

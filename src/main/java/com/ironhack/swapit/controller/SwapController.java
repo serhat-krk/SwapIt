@@ -77,19 +77,19 @@ public class SwapController {
         swapService.like(username, itemId);
         logger.debug("Item {} successfully liked by {}", likedItem.getItemId(), username);
 
-        // Check if there are matching items
-        User likerUser = userService.findByUsername(username);
-        logger.debug("User1 (likerUser): {}", likerUser.getUsername());
+//        // Check if there are matching items
+//        User likerUser = userService.findByUsername(username);
+//        logger.debug("User1 (likerUser): {}", likerUser.getUsername());
+//
+//        User likedUser = itemService.findById(itemId).orElseThrow().getOwner();
+//        logger.debug("User2 (likedItem owner): {}", likedUser.getUsername());
 
-        User likedUser = itemService.findById(itemId).orElseThrow().getOwner();
-        logger.debug("User2 (likedItem owner): {}", likedUser.getUsername());
+//        // Re-fetch users to ensure we have the latest state
+//        likerUser = userService.findByUsername(username);
+//        likedUser = userService.findByUsername(likedUser.getUsername());
 
-        // Re-fetch users to ensure we have the latest state
-        likerUser = userService.findByUsername(username);
-        likedUser = userService.findByUsername(likedUser.getUsername());
-
-        matchService.createMatchIfMutualLike(likerUser, likedUser);
-        logger.debug("Checked for mutual matches between users: {} and {}", likerUser.getUsername(), likedUser.getUsername());
+        matchService.createMatchIfMutualLike(userService.findByUsername(username), likedItem.getOwner());
+//        logger.debug("Checked for mutual matches between users: {} and {}", likerUser.getUsername(), likedUser.getUsername());
 
     }
 

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -41,11 +42,13 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void createMatchIfMutualLike(User user1, User user2) {
 
-        user1 = userRepository.findByUsername(user1.getUsername());
-        user2 = userRepository.findByUsername(user2.getUsername());
+//        user1 = userRepository.findByUsername(user1.getUsername());
+//        user2 = userRepository.findByUsername(user2.getUsername());
 
-        Set<Item> user1LikedItems = user1.getLikedItems();
-        Set<Item> user2LikedItems = user2.getLikedItems();
+        Set<Item> user1LikedItems = new HashSet<>();
+        user1LikedItems = user1.getLikedItems();
+        Set<Item> user2LikedItems = new HashSet<>();
+        user2LikedItems = user2.getLikedItems();
 
         logger.debug("{} liked items: {}", user1.getUsername(), user1LikedItems);
         logger.debug("{} liked items: {}", user2.getUsername(), user2LikedItems);
