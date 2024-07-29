@@ -12,6 +12,3 @@ spring:
 server:
   error:
     include-stacktrace: never
-
-
-#    gitmoji.dev
