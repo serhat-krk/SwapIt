@@ -1,8 +1,5 @@
 package com.ironhack.swapit.demo;
 
-import com.ironhack.swapit.enums.BookGenre;
-import com.ironhack.swapit.enums.ClothingCategory;
-import com.ironhack.swapit.enums.ItemCondition;
 import com.ironhack.swapit.model.*;
 import com.ironhack.swapit.service.ItemService;
 import com.ironhack.swapit.service.RoleService;
@@ -106,4 +103,5 @@ public class DataLoader implements CommandLineRunner {
         itemService.save(demoItem5);
 
     }
+
 }
