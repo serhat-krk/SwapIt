@@ -58,6 +58,7 @@ public class User {
     private String city;
 
     @OneToMany(mappedBy = "owner", fetch = EAGER)
+    @JsonIgnore
     private Collection<Item> ownedItems = new HashSet<>();
 
     @ManyToMany(fetch = EAGER) // A user can like many items, an item can be liked by many users
@@ -65,6 +66,7 @@ public class User {
             name = "item_likes",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
+    @JsonIgnore
     private Collection<Item> likedItems = new HashSet<>();
 
     @ManyToMany(fetch = EAGER)
@@ -76,7 +78,7 @@ public class User {
     private Collection<Role> roles = new HashSet<>();
 
 
-    // Custom constructor without id, liked items or roles
+    // Custom constructor without id, owned items, liked items, and roles
     public User(String username, String password, String email, String name, String city) {
         this.username = username;
         this.password = password;

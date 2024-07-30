@@ -34,7 +34,7 @@ public class SwapController {
 
 // GET Mappings
 
-    /**
+    /** FIND RANDOM
      * Show a random item from other users, initial pathway to Like operation
      * @return a random item from other users
      * @secured logged-in user
@@ -54,6 +54,11 @@ public class SwapController {
 // POST Mappings
 
     // TODO: Find out a way to do this without LikeRequest DTO
+    /** LIKE
+     * Add item to liked items collection of logged-in user using item ID
+     * @param likeRequest dto for item ID
+     * @secured logged-in user
+     */
     @PostMapping("/like")
     public void like(@RequestBody LikeRequest likeRequest) {
 

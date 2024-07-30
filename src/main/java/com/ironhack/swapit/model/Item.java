@@ -1,7 +1,9 @@
 package com.ironhack.swapit.model;
 
-import com.ironhack.swapit.enums.ItemCondition;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,38 +26,35 @@ public abstract class Item {
     @GeneratedValue(strategy = IDENTITY)
     private int itemId;
 
-    @Column
+    @Column(length = 120)
+    @Size(max = 120,
+            message = "Title length must be maximum 120 characters")
+    @NotBlank(message = "Title cannot be blank")
     private String title;
 
     @Column
+    @Size(max = 255,
+            message = "Description length must be maximum 255 characters")
     private String description;
-
-    @Enumerated(STRING)
-    @Column(name = "item_condition")
-    private ItemCondition condition;
 
     @ManyToOne // A user can have many items, an item has one user only
     private User owner;
 
-    @ManyToMany(mappedBy = "likedItems", fetch = EAGER)
+    @ManyToMany(mappedBy = "likedItems", fetch = EAGER) // TODO: check if it works with LAZY
+    @JsonIgnore
     private Collection<User> likedBy = new HashSet<>();
 
 
     // Custom Constructors
-    public Item(String title, ItemCondition condition, User owner) {
+    public Item(String title, User owner) {
         this.title = title;
-        this.condition = condition;
         this.owner = owner;
     }
 
-    public Item(String title, String description, ItemCondition condition, User owner) {
+    public Item(String title, String description, User owner) {
         this.title = title;
         this.description = description;
-        this.condition = condition;
         this.owner = owner;
     }
-
-
-    // Methods
 
 }

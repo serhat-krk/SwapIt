@@ -1,9 +1,10 @@
 package com.ironhack.swapit.enums;
 
 public enum ClothingCategory {
+    UNISEX,
     WOMEN,
     MEN,
-    GIRLS,
-    BOYS,
+    GIRL,
+    BOY,
     BABY
 }
