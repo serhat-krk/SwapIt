@@ -65,7 +65,7 @@ public class User {
             name = "item_likes",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<Item> likedItems = new HashSet<>();
+    private Collection<Item> likedItems = new HashSet<>();
 
     @ManyToMany(fetch = EAGER)
     @JoinTable(
@@ -73,7 +73,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Collection<Role> roles = new ArrayList<>();
+    private Collection<Role> roles = new HashSet<>();
 
 
     // Custom constructor without id, liked items or roles

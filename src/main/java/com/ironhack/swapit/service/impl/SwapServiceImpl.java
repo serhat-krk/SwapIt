@@ -24,18 +24,14 @@ public class SwapServiceImpl implements SwapService {
     private final ItemRepository itemRepository;
     private final MatchRepository matchRepository;
 
-//    private final EntityManager entityManager;
-
 
 // Methods
-
 
     // Find a random item that does not belong to user
     @Override
     public Item findRandomItem(String username) {
         return itemRepository.findRandomItem(username);
     }
-
 
     /** LIKE
      * Add item to likedItems set variable of user
@@ -50,20 +46,12 @@ public class SwapServiceImpl implements SwapService {
         User user = userRepository.findByUsername(username);
         Item item = itemRepository.findById(itemId).orElseThrow();
 
-        // Add the item to the user's likedItems set
+        // Add the item to the user's likedItems
         user.getLikedItems().add(item);
 
-        // Save the item to persist the changes
+        // Update the user in database
         userRepository.save(user);
 
-//        // Ensure that changes are flushed to the database
-//        entityManager.flush();
-//
-//        // Clear the persistence context to avoid stale data
-//        entityManager.clear();
-
     }
-
-
 
 }

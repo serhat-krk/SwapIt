@@ -7,7 +7,6 @@ import com.ironhack.swapit.service.ItemService;
 import com.ironhack.swapit.service.MatchService;
 import com.ironhack.swapit.service.SwapService;
 import com.ironhack.swapit.service.UserService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,36 +59,19 @@ public class SwapController {
 
         // Find username of logged-in user
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        logger.debug("Logged-in user: {}", username);
 
-        // Find itemId from like request
-        int itemId = likeRequest.getItemId();
-        logger.debug("Item ID from request: {}", itemId);
+        // Find liked item
+        Item likedItem = itemService.findById(likeRequest.getItemId()).orElseThrow();
 
         // Throw unauthorized error if user likes their own item
-        Item likedItem = itemService.findById(itemId).orElseThrow();
         if (likedItem.getOwner().getUsername().equals(username))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Users cannot like their own items");
 
-        logger.debug("{} likes item: {}", username, likedItem.getItemId());
+        // Save like
+        swapService.like(username, likedItem.getItemId());
 
-        // Add user to likedBy set of item
-        swapService.like(username, itemId);
-        logger.debug("Item {} successfully liked by {}", likedItem.getItemId(), username);
-
-//        // Check if there are matching items
-//        User likerUser = userService.findByUsername(username);
-//        logger.debug("User1 (likerUser): {}", likerUser.getUsername());
-//
-//        User likedUser = itemService.findById(itemId).orElseThrow().getOwner();
-//        logger.debug("User2 (likedItem owner): {}", likedUser.getUsername());
-
-//        // Re-fetch users to ensure we have the latest state
-//        likerUser = userService.findByUsername(username);
-//        likedUser = userService.findByUsername(likedUser.getUsername());
-
+        // Check matches after like is saved
         matchService.createMatchIfMutualLike(userService.findByUsername(username), likedItem.getOwner());
-//        logger.debug("Checked for mutual matches between users: {} and {}", likerUser.getUsername(), likedUser.getUsername());
 
     }
 

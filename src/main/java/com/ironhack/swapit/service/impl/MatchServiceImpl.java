@@ -40,27 +40,25 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void createMatchIfMutualLike(User user1, User user2) {
 
-//        user1 = userRepository.findByUsername(user1.getUsername());
-//        user2 = userRepository.findByUsername(user2.getUsername());
-
-        Collection<Item> user1LikedItems = new ArrayList<>();
-        user1LikedItems = user1.getLikedItems();
-        Collection<Item> user2LikedItems = new ArrayList<>();
-        user2LikedItems = user2.getLikedItems();
+        // Bring liked items of both users
+        Collection<Item> user1LikedItems = user1.getLikedItems();
+        Collection<Item> user2LikedItems = user2.getLikedItems();
 
         logger.debug("{} liked items: {}", user1.getUsername(), user1LikedItems);
         logger.debug("{} liked items: {}", user2.getUsername(), user2LikedItems);
 
+        // Create variables to use in the mutual likes loop
         boolean mutualLikeFound = false;
         Item user1LikedItem = null;
         Item user2LikedItem = null;
 
+        // Double loop to check if user1 liked any item of user2, and vice versa
         for (Item item2 : user1LikedItems) {
-            logger.debug("Checking if item1 {} owned by {} matches User2 {}", item2.getItemId(), item2.getOwner().getUsername(), user2.getUsername());
             if (item2.getOwner().equals(user2)) {
                 for (Item item1 : user2LikedItems) {
-                    logger.debug("Checking if item2 {} owned by {} matches User1 {}", item1.getItemId(), item1.getOwner().getUsername(), user1.getUsername());
                     if (item1.getOwner().equals(user1)) {
+
+                        // Update variables and break the inner loop when there is mutual like
                         mutualLikeFound = true;
                         user1LikedItem = item2;
                         user2LikedItem = item1;
@@ -69,21 +67,17 @@ public class MatchServiceImpl implements MatchService {
                 }
             }
 
+            // Break the outer loop when there is mutual like
             if (mutualLikeFound) {
                 break;
             }
         }
 
+        // Save the match to database when there is mutual like
         if (mutualLikeFound) {
-            logger.debug("Mutual like found: User1 liked item: {} | User2 liked item: {}", user1LikedItem.getItemId(), user2LikedItem.getItemId());
-            Match match = new Match(user1LikedItem, user2LikedItem);
-            matchRepository.save(match);
-            logger.debug("Match saved: {} with items ({}, {})", match.getMatchId(), user1LikedItem.getItemId(), user2LikedItem.getItemId());
-        } else {
-            logger.debug("No mutual like found between users: {} and {}", user1.getUsername(), user2.getUsername());
+            matchRepository.save(new Match(user1LikedItem, user2LikedItem));
         }
 
     }
-
 
 }

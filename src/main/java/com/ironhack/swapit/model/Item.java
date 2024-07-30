@@ -1,6 +1,5 @@
 package com.ironhack.swapit.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ironhack.swapit.enums.ItemCondition;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -39,7 +38,7 @@ public abstract class Item {
     private User owner;
 
     @ManyToMany(mappedBy = "likedItems", fetch = EAGER)
-    private Collection<User> likedBy = new ArrayList<>();
+    private Collection<User> likedBy = new HashSet<>();
 
 
     // Custom Constructors
