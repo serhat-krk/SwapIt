@@ -65,16 +65,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User findByUsername(String username) {
+
         // Retrieve user with the given username
         User user = userRepository.findByUsername(username);
+
         // Check if user exists
         if (user == null) {
             log.error("User not found in the database");
             throw new UsernameNotFoundException("User not found in the database");
         }
+
+        // Return user
         else {
             log.info("User found in the database: {}", username);
-        return user;
+            return user;
         }
     }
 
@@ -88,8 +92,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         // Encode the user's password for security before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // Add ROLE_USER role before saving
-//        roleService.addRoleToUser(user.getUsername(), "ROLE_USER");
+        // Add ROLE_USER role before saving TODO: program fails
+        user.getRoles().add(roleService.findByName("ROLE_USER"));
 
         // Save user to database
         return userRepository.save(user);
@@ -106,6 +110,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         // Find user in database
         User userToUpdate = userRepository.findByUsername(username);
 
+        // Validate password before encoding
+        
+
         // Update user with new info
         userToUpdate.setUsername(updatedUser.getUsername());
         userToUpdate.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
@@ -115,7 +122,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         // Save changes to database
         return userRepository.save(userToUpdate);
-
     }
 
 
@@ -140,16 +146,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 // DELETE methods
 
     @Override
+    @Transactional
     public void deleteByUsername(String username) {
+
         // Retrieve user with the given username
         User user = userRepository.findByUsername(username);
+
         // Check if user exists
         if (user == null) {
             log.error("User not found in the database");
             throw new UsernameNotFoundException("User not found in the database");
         }
-        else {
+
+        // Check if user has items
+        else if (!user.getOwnedItems().isEmpty()){
             log.info("User found in the database: {}", username);
+            throw new IllegalArgumentException("You must delete all your items first");
+        }
+
+        // Delete user
+        else {
             userRepository.deleteByUsername(username);
             log.info("User deleted: {}", username);
         }

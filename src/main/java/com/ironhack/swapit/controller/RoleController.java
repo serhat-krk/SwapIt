@@ -20,7 +20,6 @@ public class RoleController {
 
 // GET Mappings
 
-    // TODO: roles do not come
     // Return all roles, for admins
     @GetMapping("/all")
     @Secured("ROLE_ADMIN")

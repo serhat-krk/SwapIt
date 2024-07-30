@@ -1,5 +1,6 @@
 package com.ironhack.swapit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import org.hibernate.validator.constraints.Length;
 import java.util.*;
 
 import static jakarta.persistence.FetchType.EAGER;
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.*;
 
 @Entity
@@ -32,7 +34,7 @@ public class User {
     private String username;
 
     @Column
-    // TODO: Application does not run when password validations are active. Might be due to validation.
+    // TODO: Application does not run when password validations are active. Might be due to encoding.
 //    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&?!+=.,:;_-])",
 //            message = "Password must contain at least: one small letter, one capital letter, one digit, one special character")
 //    @Size(min = 8, max = 20,
@@ -54,6 +56,9 @@ public class User {
             message = "City must only contain letters and blank space")
     @NotBlank(message = "City cannot be blank")
     private String city;
+
+    @OneToMany(mappedBy = "owner", fetch = EAGER)
+    private Collection<Item> ownedItems = new HashSet<>();
 
     @ManyToMany(fetch = EAGER) // A user can like many items, an item can be liked by many users
     @JoinTable(

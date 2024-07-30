@@ -25,11 +25,11 @@ public class Role {
     @GeneratedValue(strategy = IDENTITY)
     private int id;
 
-    @Column
-    @Pattern(regexp = "^[a-zA-Z_]*$")
+    @Column(name = "role_name")
+    @Pattern(regexp = "^[A-Z_]*$") // TODO: To be tested
     private String name;
 
-    @ManyToMany(mappedBy = "roles", fetch = LAZY)
+    @ManyToMany(mappedBy = "roles")
     @JsonIgnore
     private Collection<User> users = new ArrayList<>();
 

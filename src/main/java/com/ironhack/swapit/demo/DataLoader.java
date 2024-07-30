@@ -43,10 +43,7 @@ public class DataLoader implements CommandLineRunner {
         var demoUserAdmin = new User("demouseradmin", "Abc.1234", "demouseradmin@demo.com", "Chris River", "Berlin");
         userService.save(demoUserAdmin);
 
-        // Add Roles
-        roleService.addRoleToUser("demouser1", "ROLE_USER");
-        roleService.addRoleToUser("demouser2", "ROLE_USER");
-        roleService.addRoleToUser("demouser3", "ROLE_USER");
+        // Add Admin Role
         roleService.addRoleToUser("demouseradmin", "ROLE_ADMIN");
 
 
