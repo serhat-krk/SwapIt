@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // Add ROLE_USER role before saving
-        roleService.addRoleToUser(user.getUsername(), "ROLE_USER");
+//        roleService.addRoleToUser(user.getUsername(), "ROLE_USER");
 
         // Save user to database
         return userRepository.save(user);
@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         // Update user with new info
         userToUpdate.setUsername(updatedUser.getUsername());
-        userToUpdate.setPassword(updatedUser.getPassword());
+        userToUpdate.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         userToUpdate.setEmail(updatedUser.getEmail());
         userToUpdate.setName(updatedUser.getName());
         userToUpdate.setCity(updatedUser.getCity());

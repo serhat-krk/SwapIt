@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.*;
 
@@ -21,7 +22,7 @@ public class User {
 
     // Properties
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = UUID)
     private UUID userId;
 
     @Column(unique = true)
@@ -31,17 +32,18 @@ public class User {
     private String username;
 
     @Column
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&?!+=.,:;_-])",
-            message = "Password must contain at least: one small letter, one capital letter, one digit, one special character")
-    @Size(min = 8, max = 20,
-            message = "Password length must be minimum 8 and maximum characters")
+    // TODO: Application does not run when password validations are active. Might be due to validation.
+//    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&?!+=.,:;_-])",
+//            message = "Password must contain at least: one small letter, one capital letter, one digit, one special character")
+//    @Size(min = 8, max = 20,
+//            message = "Password length must be minimum 8 and maximum 20 characters")
     private String password;
 
     @Column(unique = true)
     @Email(message = "Please provide a valid email address")
     private String email;
 
-    @Column
+    @Column(name = "full_name")
     @Pattern(regexp = "^[a-zA-Z ]*$",
             message = "Name must only contain letters and blank space")
     @NotBlank(message = "Name cannot be blank")

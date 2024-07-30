@@ -23,7 +23,7 @@ public class UserController {
 // GET Mappings
 
     // Return list of all users, for admins
-    @GetMapping("/users")
+    @GetMapping("/users/all")
     @Secured("ROLE_ADMIN")
     public List<User> getAll() {
         return userService.findAll();
@@ -76,8 +76,9 @@ public class UserController {
 
 // DELETE Mappings
 
+    // TODO: HTTP 403 Error, user still in db, fix it
     // Delete user from database, for logged-in user or admins
-    @DeleteMapping("/users/{username}")
+    @DeleteMapping("/users/{username}/delete")
     @PreAuthorize("#username == authentication.principal or hasRole('ROLE_ADMIN')")
     public void deleteByUsername(@PathVariable("username") String username) {
         userService.deleteByUsername(username);
