@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static jakarta.persistence.EnumType.*;
 import static jakarta.persistence.FetchType.*;
@@ -41,7 +39,7 @@ public abstract class Item {
     private User owner;
 
     @ManyToMany(mappedBy = "likedItems", fetch = EAGER)
-    private Set<User> likedBy = new HashSet<>();
+    private Collection<User> likedBy = new ArrayList<>();
 
 
     // Custom Constructors

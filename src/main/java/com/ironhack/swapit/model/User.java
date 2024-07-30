@@ -43,7 +43,7 @@ public class User {
             name = "item_likes",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<Item> likedItems = new HashSet<>();
+    private Collection<Item> likedItems = new ArrayList<>();
 
     @ManyToMany(fetch = EAGER)
     @JoinTable(
