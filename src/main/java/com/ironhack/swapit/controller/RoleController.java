@@ -21,7 +21,7 @@ public class RoleController {
 // GET Mappings
 
     // Return all roles, for admins
-    @GetMapping
+    @GetMapping("/all")
     @Secured("ROLE_ADMIN")
     public List<Role> getAll() {
         return roleService.findAll();
@@ -29,13 +29,6 @@ public class RoleController {
 
 
 // POST Mappings
-
-    // Save new role, for admins
-    @PostMapping("/add")
-    @Secured("ROLE_ADMIN")
-    public Role saveRole(@RequestBody Role role) {
-        return roleService.save(role);
-    }
 
     // Add a role to a user, for admins
     @PostMapping("/add-to-user")

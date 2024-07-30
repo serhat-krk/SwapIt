@@ -29,6 +29,11 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findAll();
     }
 
+    @Override
+    public Role findByName(String roleName) {
+        return roleRepository.findByName(roleName).orElseThrow();
+    }
+
 
 // POST Methods
 
@@ -44,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
 
         // Retrieve the user and role objects from the repository
         User user = userRepository.findByUsername(username);
-        Role role = roleRepository.findByName(roleName);
+        Role role = roleRepository.findByName(roleName).orElseThrow();
 
         // Add the role to the user's role collection
         user.getRoles().add(role);

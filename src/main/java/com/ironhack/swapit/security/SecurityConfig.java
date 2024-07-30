@@ -16,16 +16,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
-import static org.springframework.http.HttpMethod.PATCH;
-import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity // Indicates it is a security configuration class using spring web security
-@EnableMethodSecurity( // Enables us to put security configuration on method level in the controller
+@EnableMethodSecurity( // Enables to put security configuration on method level in the controller
         prePostEnabled = true,
         securedEnabled = true,
         jsr250Enabled = true)
@@ -61,7 +56,6 @@ public class SecurityConfig {
 
 
         // Set up authorization for different request matchers and user roles
-        // TODO: Update for new requests
         http.authorizeHttpRequests((requests) -> requests
 
             // Public endpoint for visitors
