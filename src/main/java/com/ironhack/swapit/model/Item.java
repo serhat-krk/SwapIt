@@ -1,6 +1,7 @@
 package com.ironhack.swapit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ironhack.swapit.enums.ItemClass;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.*;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.EnumType.*;
 import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;
@@ -37,24 +39,30 @@ public abstract class Item {
             message = "Description length must be maximum 255 characters")
     private String description;
 
-    @ManyToOne // A user can have many items, an item has one user only
+    @ManyToOne
     private User owner;
 
-    @ManyToMany(mappedBy = "likedItems", fetch = EAGER) // TODO: check if it works with LAZY
+    @Enumerated(STRING)
+    private ItemClass itemClass;
+
+    // TODO: check if it works with LAZY
+    @ManyToMany(mappedBy = "likedItems", fetch = EAGER, cascade = ALL)
     @JsonIgnore
     private Collection<User> likedBy = new HashSet<>();
 
 
     // Custom Constructors
-    public Item(String title, User owner) {
+    public Item(String title, User owner, ItemClass itemClass) {
         this.title = title;
         this.owner = owner;
+        this.itemClass = itemClass;
     }
 
-    public Item(String title, String description, User owner) {
+    public Item(String title, String description, User owner, ItemClass itemClass) {
         this.title = title;
         this.description = description;
         this.owner = owner;
+        this.itemClass = itemClass;
     }
 
 }

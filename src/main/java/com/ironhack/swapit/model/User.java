@@ -12,8 +12,8 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.*;
 
-import static jakarta.persistence.FetchType.EAGER;
-import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;
 
 @Entity
@@ -61,7 +61,7 @@ public class User {
     @JsonIgnore
     private Collection<Item> ownedItems = new HashSet<>();
 
-    @ManyToMany(fetch = EAGER) // A user can like many items, an item can be liked by many users
+    @ManyToMany(fetch = EAGER, cascade = ALL)
     @JoinTable(
             name = "item_likes",
             joinColumns = @JoinColumn(name = "user_id"),

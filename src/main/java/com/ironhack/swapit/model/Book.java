@@ -1,6 +1,7 @@
 package com.ironhack.swapit.model;
 
 import com.ironhack.swapit.enums.BookGenre;
+import com.ironhack.swapit.enums.ItemClass;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -26,14 +27,14 @@ public class Book extends Item {
 
 
     // Custom Constructors
-    public Book(String title, User owner, String author, BookGenre genre) {
-        super(title, owner);
+    public Book(String title, User owner, ItemClass itemClass, String author, BookGenre genre) {
+        super(title, owner, itemClass);
         this.author = author;
         this.genre = genre;
     }
 
-    public Book(String title, String description, User owner, String author, BookGenre genre) {
-        super(title, description, owner);
+    public Book(String title, String description, User owner, ItemClass itemClass, String author, BookGenre genre) {
+        super(title, description, owner, itemClass);
         this.author = author;
         this.genre = genre;
     }

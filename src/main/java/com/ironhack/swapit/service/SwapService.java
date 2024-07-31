@@ -10,12 +10,7 @@ public interface SwapService {
     // GET methods
     Item findRandomItem(String username);
 
-    // POST methods
-
     // PUT methods
     void like(String username, int itemId);
 
-    // PATCH methods
-
-    // DELETE methods
 }

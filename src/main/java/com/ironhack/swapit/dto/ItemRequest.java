@@ -7,12 +7,12 @@ import com.ironhack.swapit.enums.ItemClass;
 import lombok.Data;
 
 @Data
-public class ItemListRequest {
+public class ItemRequest {
 
     // Item properties
-    private ItemClass itemClass;
     private String title;
     private String description;
+    private ItemClass itemClass;
 
     // Book properties
     private BookGenre genre;

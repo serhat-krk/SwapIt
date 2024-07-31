@@ -1,7 +1,6 @@
 package com.ironhack.swapit.controller;
 
-import com.ironhack.swapit.dto.ItemListRequest;
-import com.ironhack.swapit.enums.ItemClass;
+import com.ironhack.swapit.dto.ItemRequest;
 import com.ironhack.swapit.model.Book;
 import com.ironhack.swapit.model.Clothing;
 import com.ironhack.swapit.model.Item;
@@ -14,10 +13,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.ironhack.swapit.enums.ItemClass.*;
 
@@ -40,13 +39,6 @@ public class ItemController {
         return itemService.findAll();
     }
 
-    // Return an item by id, for the owner or admins
-    @GetMapping("/id/{id}")
-    @PreAuthorize("@itemServiceImpl.isOwner(#itemId) or hasRole('ROLE_ADMIN')")
-    public Optional<Item> getById(@PathVariable("id") int itemId) {
-        return itemService.findById(itemId);
-    }
-
     // Return all items of a user by username, for the owner or admins
     @GetMapping("/user/{username}")
     @PreAuthorize("#username == authentication.principal or hasRole('ROLE_ADMIN')")
@@ -54,63 +46,94 @@ public class ItemController {
         return itemService.findUserItems(username);
     }
 
+    // Return an item by id, for the owner or admins
+    @GetMapping("/id/{id}")
+    @PreAuthorize("@itemServiceImpl.isOwner(#itemId) or hasRole('ROLE_ADMIN')")
+    public Optional<Item> getById(@PathVariable("id") int itemId) {
+        return itemService.findById(itemId);
+    }
 
-// POST Mappings
+
+// POST Mapping
 
     /** LIST
      * Create a new item (book or clothing) for the logged-in user
      * @param itemListRequest dto for item details
-     * @return listed item from database
+     * @return saved item
      * @secured logged-in user
      */
     @PostMapping("/list")
     @ResponseStatus(HttpStatus.CREATED)
-    public Item list(@RequestBody @Valid ItemListRequest itemListRequest) {
+    public Item list(@RequestBody @Valid ItemRequest itemListRequest) {
 
         // Find username of logged-in user
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        // Initiate null item variable
-        Item itemToList = null;
+        // Initiate item variable with switch condition
+        Item itemToList = switch (itemListRequest.getItemClass()) {
 
-        // Update item variable as Book
-        if (itemListRequest.getItemClass().equals(BOOK)) {
-            itemToList = new Book(
+            case BOOK -> new Book(
                     itemListRequest.getTitle(),
                     itemListRequest.getDescription(),
                     userService.findByUsername(username),
+                    BOOK,
                     itemListRequest.getAuthor(),
                     itemListRequest.getGenre());
-        }
 
-        // Update item variable as Clothing
-        if (itemListRequest.getItemClass().equals(CLOTHING)) {
-            itemToList = new Clothing(
+            case CLOTHING -> new Clothing(
                     itemListRequest.getTitle(),
                     itemListRequest.getDescription(),
                     userService.findByUsername(username),
+                    CLOTHING,
                     itemListRequest.getCategory(),
                     itemListRequest.getType(),
                     itemListRequest.getSize());
-        }
 
-        // Save item
+            default -> null;
+
+        };
+
+        // Save item to database
         return itemService.save(itemToList);
 
     }
 
 
-// PUT Mappings
+// PUT Mapping
 
-//    @PutMapping("/id/{id}")
-//    public Item update(@PathVariable("id") int itemId, @RequestBody @Valid Item updatedItem) {
-//
-//    }
+    /** UPDATE
+     * Change item details (book or clothing) of the logged-in user
+     * @param itemId of item to update
+     * @param itemUpdateRequest body for updates
+     * @return updated item
+     * @secured item owner (logged-in user) or admin
+     */
+    @PutMapping("/id/{id}/update")
+    @PreAuthorize("@itemServiceImpl.isOwner(#itemId) or hasRole('ROLE_ADMIN')")
+    public Item update(@PathVariable("id") int itemId, @RequestBody @Valid ItemRequest itemUpdateRequest) {
+
+        // Find username of logged-in user and item to update
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Item itemToUpdate = itemService.findById(itemId).orElseThrow();
+
+        // Use separate update methods based on item class
+        switch (itemToUpdate.getItemClass()) {
+            case BOOK -> itemService.updateBook(itemId, itemUpdateRequest);
+            case CLOTHING -> itemService.updateClothing(itemId, itemUpdateRequest);
+        }
+
+        // Return updated item
+        return itemService.findById(itemId).orElseThrow();
+    }
 
 
-// PATCH Mappings
+// DELETE Mapping
 
-
-// DELETE Mappings
+    // Delete an item, for owner (logged-in user) or admins
+    @DeleteMapping("id/{id}/delete")
+    @PreAuthorize("@itemServiceImpl.isOwner(#itemId) or hasRole('ROLE_ADMIN')")
+    public void deleteById(@PathVariable("id") int itemId) {
+        itemService.deleteById(itemId);
+    }
 
 }

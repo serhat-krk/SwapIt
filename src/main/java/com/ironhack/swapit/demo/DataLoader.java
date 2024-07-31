@@ -1,6 +1,7 @@
 package com.ironhack.swapit.demo;
 
 import com.ironhack.swapit.enums.ClothingType;
+import com.ironhack.swapit.enums.ItemClass;
 import com.ironhack.swapit.model.*;
 import com.ironhack.swapit.service.ItemService;
 import com.ironhack.swapit.service.RoleService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import static com.ironhack.swapit.enums.BookGenre.*;
 import static com.ironhack.swapit.enums.ClothingCategory.*;
 import static com.ironhack.swapit.enums.ClothingType.*;
+import static com.ironhack.swapit.enums.ItemClass.*;
 
 @Component
 @RequiredArgsConstructor
@@ -53,6 +55,7 @@ public class DataLoader implements CommandLineRunner {
                 "Adidas Gazelle Men Shoes 43 Grey",
                 "Only worn a few times. It's in good condition. It has a small yellow mark on the left side of the right foot.",
                 demoUser1,
+                CLOTHING,
                 MEN,
                 SHOES,
                 "43");
@@ -61,6 +64,7 @@ public class DataLoader implements CommandLineRunner {
         var demoItem2 = new Clothing(
                 "Levi's 501 Black Jeans W32 L34",
                 demoUser2,
+                CLOTHING,
                 MEN,
                 JEANS,
                 "W32 L34");
@@ -70,6 +74,7 @@ public class DataLoader implements CommandLineRunner {
                 "Game of Thrones",
                 "I received as a gift and didn't open the cover",
                 demoUser3,
+                BOOK,
                 "George R. R. Martin",
                 FANTASY);
         itemService.save(demoItem3);
@@ -78,6 +83,7 @@ public class DataLoader implements CommandLineRunner {
                 "Sapiens",
                 "No notes, no missing pages, in good condition",
                 demoUser3,
+                BOOK,
                 "Yuval Noah Harari",
                 HISTORY);
         itemService.save(demoItem4);
@@ -85,6 +91,7 @@ public class DataLoader implements CommandLineRunner {
         var demoItem5 = new Book(
                 "Hobbit",
                 demoUser3,
+                BOOK,
                 "J. R. R. Tolkien",
                 FANTASY);
         itemService.save(demoItem5);
@@ -92,9 +99,10 @@ public class DataLoader implements CommandLineRunner {
         var demoItem6 = new Book(
                 "Dune",
                 demoUser2,
+                BOOK,
                 "Frank Herbert",
                 SCIENCE_FICTION);
-        itemService.save(demoItem5);
+        itemService.save(demoItem6);
 
     }
 

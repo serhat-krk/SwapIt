@@ -1,19 +1,14 @@
 package com.ironhack.swapit.service.impl;
 
-import com.ironhack.swapit.model.Item;
-import com.ironhack.swapit.model.Role;
-import com.ironhack.swapit.model.User;
+import com.ironhack.swapit.dto.ItemRequest;
+import com.ironhack.swapit.model.*;
 import com.ironhack.swapit.repository.ItemRepository;
-import com.ironhack.swapit.repository.UserRepository;
 import com.ironhack.swapit.service.ItemService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -44,7 +39,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-// POST Methods
+// POST Method
 
     @Transactional
     public Item save(Item item) {
@@ -55,10 +50,67 @@ public class ItemServiceImpl implements ItemService {
 
 // PUT Methods
 
-//    @Transactional
-//    public Item update(int itemId, Item item) {
-//
-//    }
+    @Transactional
+    public void updateBook(int itemId, ItemRequest updatedBook) {
+        log.info("Updating book item {} details in the database", itemId);
+
+        // Find book in database
+        Book bookToUpdate = (Book) itemRepository.findById(itemId).orElseThrow();
+
+        // Update non-null book details
+        if (updatedBook.getTitle() != null)
+            bookToUpdate.setTitle(updatedBook.getTitle());
+        if (updatedBook.getDescription() != null)
+            bookToUpdate.setDescription(updatedBook.getDescription());
+        if (updatedBook.getAuthor() != null)
+            bookToUpdate.setAuthor(updatedBook.getAuthor());
+        if (updatedBook.getGenre() != null)
+            bookToUpdate.setGenre(updatedBook.getGenre());
+
+        // Save updated book to database
+        itemRepository.save(bookToUpdate);
+    }
+
+    @Transactional
+    public void updateClothing(int itemId, ItemRequest updatedClothing) {
+        log.info("Updating clothing item {} details in the database", itemId);
+
+        // Find clothing in database
+        Clothing clothingToUpdate = (Clothing) itemRepository.findById(itemId).orElseThrow();
+
+        // Update non-null clothing details
+        if (updatedClothing.getTitle() != null)
+          clothingToUpdate.setTitle(updatedClothing.getTitle());
+        if (updatedClothing.getDescription() != null)
+            clothingToUpdate.setDescription(updatedClothing.getDescription());
+        if (updatedClothing.getCategory() != null)
+            clothingToUpdate.setCategory(updatedClothing.getCategory());
+        if (updatedClothing.getType() != null)
+            clothingToUpdate.setType(updatedClothing.getType());
+        if (updatedClothing.getSize() != null)
+            clothingToUpdate.setSize(updatedClothing.getSize());
+
+        // Save updated clothing to database
+        itemRepository.save(clothingToUpdate);
+    }
+
+
+// DELETE Method
+
+    @Transactional
+    public void deleteById(int itemId) {
+
+        // Find item to delete by ID
+        Item itemToDelete = itemRepository.findById(itemId).orElseThrow();
+
+        // Disassociate item from owner
+        itemToDelete.setOwner(null);
+        itemRepository.save(itemToDelete);
+
+        // Delete item
+        itemRepository.deleteById(itemId);
+    }
+
 
 // Other Methods
 
