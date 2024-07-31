@@ -3,7 +3,7 @@ package com.ironhack.swapit.security.filters;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ironhack.swapit.dto.LoginRequest;
+import com.ironhack.swapit.dto.request.LoginRequest;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

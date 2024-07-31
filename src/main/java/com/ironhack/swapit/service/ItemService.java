@@ -1,6 +1,7 @@
 package com.ironhack.swapit.service;
 
-import com.ironhack.swapit.dto.ItemRequest;
+import com.ironhack.swapit.dto.display.ItemDisplay;
+import com.ironhack.swapit.dto.request.ItemRequest;
 import com.ironhack.swapit.model.Item;
 
 import java.util.List;
@@ -22,5 +23,9 @@ public interface ItemService {
 
     // DELETE method
     void deleteById(int itemId);
+
+    // Other methods
+    boolean isOwner(int itemId);
+    ItemDisplay createDisplayItem(Item item);
 
 }

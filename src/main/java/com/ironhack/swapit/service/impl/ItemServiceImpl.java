@@ -1,6 +1,8 @@
 package com.ironhack.swapit.service.impl;
 
-import com.ironhack.swapit.dto.ItemRequest;
+import com.ironhack.swapit.dto.display.ItemDisplay;
+import com.ironhack.swapit.dto.display.UserDisplay;
+import com.ironhack.swapit.dto.request.ItemRequest;
 import com.ironhack.swapit.model.*;
 import com.ironhack.swapit.repository.ItemRepository;
 import com.ironhack.swapit.service.ItemService;
@@ -35,7 +37,7 @@ public class ItemServiceImpl implements ItemService {
 
     public List<Item> findUserItems(String username) {
         log.info("Fetching all items of user: {}", username);
-        return itemRepository.findItemByOwner_Username(username);
+        return itemRepository.findByOwner_Username(username);
     }
 
 
@@ -129,6 +131,48 @@ public class ItemServiceImpl implements ItemService {
 
         // Return true if item owner username equals logged-in user username, return false if not
         return item.getOwner().getUsername().equals(currentUsername);
+    }
+
+    // Create display item
+    public ItemDisplay createDisplayItem(Item item) {
+
+        // Create display item with shared book and clothing properties
+        ItemDisplay itemDisplay = new ItemDisplay(
+                item.getItemId(),
+                item.getTitle(),
+                item.getDescription(),
+
+                // Create display user
+                new UserDisplay(
+                        item.getOwner().getName(),
+                        item.getOwner().getCity(),
+                        item.getOwner().getEmail()
+                ),
+
+                item.getItemClass()
+        );
+
+        // Update display item with book OR clothing properties
+        switch (item.getItemClass()) {
+
+            case BOOK -> {
+                Book bookFound = (Book) item;
+                itemDisplay.setGenre(bookFound.getGenre());
+                itemDisplay.setAuthor(bookFound.getAuthor());
+            }
+
+            case CLOTHING -> {
+                Clothing clothingFound = (Clothing) item;
+                itemDisplay.setCategory(clothingFound.getCategory());
+                itemDisplay.setType(clothingFound.getType());
+                itemDisplay.setSize(clothingFound.getSize());
+            }
+
+        }
+
+        // Return updated display item
+        return itemDisplay;
+
     }
 
 }

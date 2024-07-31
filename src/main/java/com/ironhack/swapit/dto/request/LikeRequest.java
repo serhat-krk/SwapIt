@@ -1,4 +1,4 @@
-package com.ironhack.swapit.dto;
+package com.ironhack.swapit.dto.request;
 
 import lombok.Data;
 

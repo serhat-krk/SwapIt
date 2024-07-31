@@ -1,10 +1,13 @@
 package com.ironhack.swapit.service.impl;
 
+import com.ironhack.swapit.dto.display.ItemDisplay;
+import com.ironhack.swapit.dto.display.MatchDisplay;
 import com.ironhack.swapit.model.Item;
 import com.ironhack.swapit.model.Match;
 import com.ironhack.swapit.model.User;
 import com.ironhack.swapit.repository.MatchRepository;
 import com.ironhack.swapit.repository.UserRepository;
+import com.ironhack.swapit.service.ItemService;
 import com.ironhack.swapit.service.MatchService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ public class MatchServiceImpl implements MatchService {
 
     // Repository Instantiation
     private final MatchRepository matchRepository;
+    private final ItemService itemService;
 
 
 // GET Methods
@@ -40,7 +44,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
 
-// Other Methods
+// POST Method
 
     @Transactional
     public void createMatchIfMutualLike(User user1, User user2) {
@@ -80,6 +84,17 @@ public class MatchServiceImpl implements MatchService {
 
     }
 
+
+// DELETE Method
+
+    @Transactional
+    public void deleteById(int matchId) {
+        matchRepository.deleteById(matchId);
+    }
+
+
+// Other Methods
+
     /**
      * Security check if logged-in user owns the matched item
      * @return True: when user is owner
@@ -99,6 +114,17 @@ public class MatchServiceImpl implements MatchService {
 
         // Return true if item2 owner username equals logged-in user username, return false if not
         return match.getItem2().getOwner().getUsername().equals(currentUsername);
+    }
+
+    // Create display match
+    public MatchDisplay createDisplayMatch(Match match) {
+
+        return new MatchDisplay(
+                match.getMatchId(),
+                itemService.createDisplayItem(match.getItem1()),
+                itemService.createDisplayItem(match.getItem1())
+        );
+
     }
 
 }

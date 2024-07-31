@@ -1,8 +1,8 @@
 package com.ironhack.swapit.controller;
 
-import com.ironhack.swapit.dto.LikeRequest;
+import com.ironhack.swapit.dto.display.ItemDisplay;
+import com.ironhack.swapit.dto.request.LikeRequest;
 import com.ironhack.swapit.model.Item;
-import com.ironhack.swapit.model.User;
 import com.ironhack.swapit.service.ItemService;
 import com.ironhack.swapit.service.MatchService;
 import com.ironhack.swapit.service.SwapService;
@@ -11,13 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/swap")
@@ -41,7 +37,7 @@ public class SwapController {
      * TODO: add filters
      */
     @GetMapping
-    public Item getRandom() {
+    public ItemDisplay getRandom() {
 
         // Find username of logged-in user
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

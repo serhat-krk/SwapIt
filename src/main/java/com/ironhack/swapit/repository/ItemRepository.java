@@ -7,12 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 public interface ItemRepository extends JpaRepository <Item, Integer> {
 
-    List<Item> findItemByOwner_Username(String username);
+    List<Item> findByOwner_Username(String username);
 
     @Query(value = "SELECT * " +
             "FROM swap_db.items i " +
