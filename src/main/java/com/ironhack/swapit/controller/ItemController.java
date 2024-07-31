@@ -39,18 +39,18 @@ public class ItemController {
         return itemService.findAll();
     }
 
-    // Return all items of a user by username, for the owner or admins
-    @GetMapping("/user/{username}")
-    @PreAuthorize("#username == authentication.principal or hasRole('ROLE_ADMIN')")
-    public List<Item> getByUser(@PathVariable("username") String username) {
-        return itemService.findUserItems(username);
-    }
-
     // Return an item by id, for the owner or admins
     @GetMapping("/id/{id}")
     @PreAuthorize("@itemServiceImpl.isOwner(#itemId) or hasRole('ROLE_ADMIN')")
     public Optional<Item> getById(@PathVariable("id") int itemId) {
         return itemService.findById(itemId);
+    }
+
+    // Return all items of a user by username, for the owner or admins
+    @GetMapping("/user/{username}")
+    @PreAuthorize("#username == authentication.principal or hasRole('ROLE_ADMIN')")
+    public List<Item> getByUser(@PathVariable("username") String username) {
+        return itemService.findUserItems(username);
     }
 
 

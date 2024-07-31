@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,29 +24,30 @@ public class MatchServiceImpl implements MatchService {
     // Repository Instantiation
     private final MatchRepository matchRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(MatchService.class);
-    private final UserRepository userRepository;
-
 
 // GET Methods
 
-    @Override
     public List<Match> findAll() {
         return matchRepository.findAll();
+    }
+
+    public Optional<Match> findById(int matchId) {
+        return matchRepository.findById(matchId);
+    }
+
+    public List<Match> findUserMatches(String username) {
+        return matchRepository.findByItem1_Owner_UsernameOrItem2_Owner_Username(username, username);
     }
 
 
 // Other Methods
 
-    @Override
+    @Transactional
     public void createMatchIfMutualLike(User user1, User user2) {
 
         // Bring liked items of both users
         Collection<Item> user1LikedItems = user1.getLikedItems();
         Collection<Item> user2LikedItems = user2.getLikedItems();
-
-        logger.debug("{} liked items: {}", user1.getUsername(), user1LikedItems);
-        logger.debug("{} liked items: {}", user2.getUsername(), user2LikedItems);
 
         // Create variables to use in the mutual likes loop
         boolean mutualLikeFound = false;
@@ -68,16 +70,35 @@ public class MatchServiceImpl implements MatchService {
             }
 
             // Break the outer loop when there is mutual like
-            if (mutualLikeFound) {
+            if (mutualLikeFound)
                 break;
-            }
         }
 
         // Save the match to database when there is mutual like
-        if (mutualLikeFound) {
+        if (mutualLikeFound)
             matchRepository.save(new Match(user1LikedItem, user2LikedItem));
-        }
 
+    }
+
+    /**
+     * Security check if logged-in user owns the matched item
+     * @return True: when user is owner
+     *         False: when user is not owner
+     */
+    public boolean isItemOwner(int matchId) {
+
+        // Find username of logged-in user
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // Find match by matchId
+        Match match = matchRepository.findById(matchId).orElseThrow();
+
+        // Return true if item1 owner username equals logged-in user username
+        if (match.getItem1().getOwner().getUsername().equals(currentUsername))
+            return true;
+
+        // Return true if item2 owner username equals logged-in user username, return false if not
+        return match.getItem2().getOwner().getUsername().equals(currentUsername);
     }
 
 }
