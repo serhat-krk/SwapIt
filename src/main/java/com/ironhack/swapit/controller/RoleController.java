@@ -34,7 +34,6 @@ public class RoleController {
     @PostMapping("/add-to-user")
     @Secured("ROLE_ADMIN")
     public void addRoleToUser(@RequestBody RoleToUser roleToUser) {
-
         roleService.addRoleToUser(roleToUser.getUsername(), roleToUser.getRoleName());
     }
 
