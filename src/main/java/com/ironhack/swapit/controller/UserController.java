@@ -69,7 +69,7 @@ public class UserController {
     // Update user city, for logged-in user
     @PatchMapping("/users/{username}/update-city")
     @PreAuthorize("#username == authentication.principal")
-    public User update(@PathVariable("username") String username, @RequestBody @Valid String newCity) {
+    public User updateCity(@PathVariable("username") String username, @RequestBody @Valid String newCity) {
         return userService.updateCity(username, newCity);
     }
 

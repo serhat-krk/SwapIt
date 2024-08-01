@@ -21,7 +21,7 @@ import static com.ironhack.swapit.enums.ItemClass.CLOTHING;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-class ItemRepositoryTest {
+public class ItemRepositoryTest {
 
     @Autowired private ItemRepository itemRepository;
     @Autowired private UserRepository userRepository;

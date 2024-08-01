@@ -37,7 +37,6 @@ public class SwapServiceImpl implements SwapService {
 // Methods
 
     // Find a random item that does not belong to user
-    @Override
     public ItemDisplay findRandomItem(String username) {
 
         // Fetch random item
@@ -53,7 +52,6 @@ public class SwapServiceImpl implements SwapService {
      * @param username
      * @param itemId
      */
-    @Override
     @Transactional
     public void like(String username, int itemId) {
 

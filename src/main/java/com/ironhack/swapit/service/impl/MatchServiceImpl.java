@@ -122,7 +122,7 @@ public class MatchServiceImpl implements MatchService {
         return new MatchDisplay(
                 match.getMatchId(),
                 itemService.createDisplayItem(match.getItem1()),
-                itemService.createDisplayItem(match.getItem1())
+                itemService.createDisplayItem(match.getItem2())
         );
 
     }

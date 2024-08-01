@@ -127,9 +127,14 @@ public class ItemServiceImpl implements ItemService {
         String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
 
         // Find item by itemId
-        Item item = itemRepository.findById(itemId).orElseThrow();
+        Item item = itemRepository.findById(itemId).orElseThrow(NoSuchElementException::new);
 
-        // Return true if item owner username equals logged-in user username, return false if not
+        // TODO: remove it after testing in POSTMAN
+//        if (item.getOwner() == null) {
+//            throw new NoSuchElementException("Item owner not found");
+//        }
+
+        // Return true if item owner username equals logged-in user username
         return item.getOwner().getUsername().equals(currentUsername);
     }
 
