@@ -14,8 +14,8 @@ public interface ItemRepository extends JpaRepository <Item, Integer> {
     List<Item> findByOwner_Username(String username);
 
     @Query(value = "SELECT * " +
-            "FROM swap_db.items i " +
-            "JOIN swap_db.users u " +
+            "FROM items i " +
+            "JOIN users u " +
             "ON i.owner_user_id = u.user_id " +
             "WHERE u.username <> :username " +
             "ORDER BY RAND() " +
