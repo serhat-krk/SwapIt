@@ -1,6 +1,7 @@
 package com.ironhack.swapit.service.impl;
 
 import com.ironhack.swapit.dto.display.ItemDisplay;
+import com.ironhack.swapit.dto.display.RandomItemDisplay;
 import com.ironhack.swapit.dto.display.UserDisplay;
 import com.ironhack.swapit.dto.request.ItemRequest;
 import com.ironhack.swapit.model.*;
@@ -139,7 +140,7 @@ public class ItemServiceImpl implements ItemService {
         return item.getOwner().getUsername().equals(currentUsername);
     }
 
-    // Create display item
+    // Create display item to show on matches, with owner information
     public ItemDisplay createDisplayItem(Item item) {
 
         // Create display item with shared book and clothing properties
@@ -178,6 +179,39 @@ public class ItemServiceImpl implements ItemService {
 
         // Return updated display item
         return itemDisplay;
+
+    }
+
+    // Create display item to like, WITHOUT owner information
+    public RandomItemDisplay createRandomDisplayItem(Item item) {
+
+        RandomItemDisplay randomItemDisplay = new RandomItemDisplay(
+                item.getItemId(),
+                item.getTitle(),
+                item.getDescription(),
+                item.getItemClass()
+        );
+
+        // Update display item with book OR clothing properties
+        switch (item.getItemClass()) {
+
+            case BOOK -> {
+                Book bookFound = (Book) item;
+                randomItemDisplay.setGenre(bookFound.getGenre());
+                randomItemDisplay.setAuthor(bookFound.getAuthor());
+            }
+
+            case CLOTHING -> {
+                Clothing clothingFound = (Clothing) item;
+                randomItemDisplay.setCategory(clothingFound.getCategory());
+                randomItemDisplay.setType(clothingFound.getType());
+                randomItemDisplay.setSize(clothingFound.getSize());
+            }
+
+        }
+
+        // Return updated display item
+        return randomItemDisplay;
 
     }
 

@@ -1,10 +1,6 @@
 package com.ironhack.swapit.service.impl;
 
-import com.ironhack.swapit.dto.display.ItemDisplay;
-import com.ironhack.swapit.dto.display.UserDisplay;
-import com.ironhack.swapit.enums.ItemClass;
-import com.ironhack.swapit.model.Book;
-import com.ironhack.swapit.model.Clothing;
+import com.ironhack.swapit.dto.display.RandomItemDisplay;
 import com.ironhack.swapit.model.Item;
 import com.ironhack.swapit.model.User;
 import com.ironhack.swapit.repository.ItemRepository;
@@ -12,15 +8,10 @@ import com.ironhack.swapit.repository.MatchRepository;
 import com.ironhack.swapit.repository.UserRepository;
 import com.ironhack.swapit.service.ItemService;
 import com.ironhack.swapit.service.SwapService;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import static com.ironhack.swapit.enums.ItemClass.*;
 
 @Service
 @RequiredArgsConstructor
@@ -37,13 +28,13 @@ public class SwapServiceImpl implements SwapService {
 // Methods
 
     // Find a random item that does not belong to user
-    public ItemDisplay findRandomItem(String username) {
+    public RandomItemDisplay findRandomItem(String username) {
 
         // Fetch random item
         Item itemFound = itemRepository.findRandomItem(username);
 
         // Return item in display format
-        return itemService.createDisplayItem(itemFound);
+        return itemService.createRandomDisplayItem(itemFound);
 
     }
 

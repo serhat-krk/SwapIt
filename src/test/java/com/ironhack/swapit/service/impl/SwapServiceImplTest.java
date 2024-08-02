@@ -1,6 +1,7 @@
 package com.ironhack.swapit.service.impl;
 
 import com.ironhack.swapit.dto.display.ItemDisplay;
+import com.ironhack.swapit.dto.display.RandomItemDisplay;
 import com.ironhack.swapit.dto.display.UserDisplay;
 import com.ironhack.swapit.model.Book;
 import com.ironhack.swapit.model.Clothing;
@@ -27,6 +28,7 @@ import static com.ironhack.swapit.enums.ClothingType.SHOES;
 import static com.ironhack.swapit.enums.ItemClass.BOOK;
 import static com.ironhack.swapit.enums.ItemClass.CLOTHING;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -96,32 +98,30 @@ public class SwapServiceImplTest {
 
     @Test
     void findRandomItem() {
-
         // Arrange
         String username = "demouser1";
         User owner = new User("otheruser", "OtherPassword123", "otheruser@demo.com", "Other User", "Some City");
         Item randomItem = new Book("Some Book", "Some Description", owner, BOOK, "Some Author", FANTASY);
         randomItem.setItemId(1); // Assuming there's a setter or direct access to itemId
 
-        ItemDisplay expectedDisplayItem = new ItemDisplay(
+        RandomItemDisplay expectedDisplayItem = new RandomItemDisplay(
                 randomItem.getItemId(),
                 randomItem.getTitle(),
                 randomItem.getDescription(),
-                new UserDisplay(owner.getName(), owner.getCity(), owner.getEmail()),
                 randomItem.getItemClass()
         );
 
-        when(itemRepository.findRandomItem(username)).thenReturn(randomItem);
-        when(itemService.createDisplayItem(randomItem)).thenReturn(expectedDisplayItem);
+        given(itemRepository.findRandomItem(username)).willReturn(randomItem);
+        given(itemService.createRandomDisplayItem(randomItem)).willReturn(expectedDisplayItem);
 
         // Act
-        ItemDisplay displayItem = swapService.findRandomItem(username);
+        RandomItemDisplay randomDisplayItem = swapService.findRandomItem(username);
 
         // Assert
-        assertNotNull(displayItem);
-        assertEquals(expectedDisplayItem, displayItem);
+        assertNotNull(randomDisplayItem);
+        assertEquals(expectedDisplayItem, randomDisplayItem);
         verify(itemRepository, times(1)).findRandomItem(username);
-        verify(itemService, times(1)).createDisplayItem(randomItem);
+        verify(itemService, times(1)).createRandomDisplayItem(randomItem);
     }
 
     @Test

@@ -1,15 +1,11 @@
 package com.ironhack.swapit.service;
 
-import com.ironhack.swapit.dto.display.ItemDisplay;
-import com.ironhack.swapit.model.Item;
-import com.ironhack.swapit.model.User;
-
-import java.util.List;
+import com.ironhack.swapit.dto.display.RandomItemDisplay;
 
 public interface SwapService {
 
     // GET methods
-    ItemDisplay findRandomItem(String username);
+    RandomItemDisplay findRandomItem(String username);
 
     // PUT methods
     void like(String username, int itemId);

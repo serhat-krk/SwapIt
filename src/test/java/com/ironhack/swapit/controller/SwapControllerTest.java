@@ -2,6 +2,7 @@ package com.ironhack.swapit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ironhack.swapit.dto.display.ItemDisplay;
+import com.ironhack.swapit.dto.display.RandomItemDisplay;
 import com.ironhack.swapit.dto.display.UserDisplay;
 import com.ironhack.swapit.dto.request.LikeRequest;
 import com.ironhack.swapit.enums.ItemClass;
@@ -67,11 +68,10 @@ public class SwapControllerTest {
     void getRandom_ShouldReturnRandomItemForLoggedInUser() throws Exception {
         // Arrange
         String username = "demouser1";
-        ItemDisplay randomItemDisplay = new ItemDisplay(
+        RandomItemDisplay randomItemDisplay = new RandomItemDisplay(
                 1,
                 "Random Item",
                 "Description of random item",
-                new UserDisplay("Other User", "City", "otheruser@demo.com"),
                 BOOK
         );
 
@@ -84,8 +84,6 @@ public class SwapControllerTest {
                 .andExpect(jsonPath("$.itemId").value(1))
                 .andExpect(jsonPath("$.title").value("Random Item"))
                 .andExpect(jsonPath("$.description").value("Description of random item"))
-                .andExpect(jsonPath("$.user.name").value("Other User"))
-                .andExpect(jsonPath("$.user.city").value("City"))
                 .andExpect(jsonPath("$.itemClass").value(BOOK.toString()));
     }
 

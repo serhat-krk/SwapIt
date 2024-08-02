@@ -1,6 +1,7 @@
 package com.ironhack.swapit.service;
 
 import com.ironhack.swapit.dto.display.ItemDisplay;
+import com.ironhack.swapit.dto.display.RandomItemDisplay;
 import com.ironhack.swapit.dto.request.ItemRequest;
 import com.ironhack.swapit.model.Item;
 
@@ -27,5 +28,6 @@ public interface ItemService {
     // Other methods
     boolean isOwner(int itemId);
     ItemDisplay createDisplayItem(Item item);
+    RandomItemDisplay createRandomDisplayItem(Item item);
 
 }

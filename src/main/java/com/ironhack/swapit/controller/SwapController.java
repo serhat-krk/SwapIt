@@ -1,6 +1,7 @@
 package com.ironhack.swapit.controller;
 
 import com.ironhack.swapit.dto.display.ItemDisplay;
+import com.ironhack.swapit.dto.display.RandomItemDisplay;
 import com.ironhack.swapit.dto.request.LikeRequest;
 import com.ironhack.swapit.model.Item;
 import com.ironhack.swapit.service.ItemService;
@@ -36,7 +37,7 @@ public class SwapController {
      * TODO: add filters
      */
     @GetMapping
-    public ItemDisplay getRandom() {
+    public RandomItemDisplay getRandom() {
 
         // Find username of logged-in user
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
