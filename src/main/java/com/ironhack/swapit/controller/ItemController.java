@@ -6,8 +6,10 @@ import com.ironhack.swapit.model.Clothing;
 import com.ironhack.swapit.model.Item;
 import com.ironhack.swapit.service.ItemService;
 import com.ironhack.swapit.service.UserService;
+import com.ironhack.swapit.service.impl.ItemServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,7 +49,7 @@ public class ItemController {
 
     // Return all items of a user by username, for the owner or admins
     @GetMapping("/user/{username}")
-    @PreAuthorize("#username == authentication.principal or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("#username == authentication.name or hasRole('ROLE_ADMIN')")
     public List<Item> getByUser(@PathVariable("username") String username) {
         return itemService.findUserItems(username);
     }

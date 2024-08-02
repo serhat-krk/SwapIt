@@ -26,7 +26,6 @@ public class SwapController {
     private final SwapService swapService;
     private final MatchService matchService;
 
-    private static final Logger logger = LoggerFactory.getLogger(SwapController.class);
 
 // GET Mappings
 

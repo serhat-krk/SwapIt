@@ -54,7 +54,7 @@ public class MatchController {
 
     // Return list off all matches of a user, for logged-in user and admins
     @GetMapping("/user/{username}")
-    @PreAuthorize("#username == authentication.principal or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("#username == authentication.name or hasRole('ROLE_ADMIN')")
     public List<MatchDisplay> getByUser(@PathVariable("username") String username) {
 
         // Fetch all matches of user

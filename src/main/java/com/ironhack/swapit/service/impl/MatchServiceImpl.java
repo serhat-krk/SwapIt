@@ -108,12 +108,9 @@ public class MatchServiceImpl implements MatchService {
         // Find match by matchId
         Match match = matchRepository.findById(matchId).orElseThrow();
 
-        // Return true if item1 owner username equals logged-in user username
-        if (match.getItem1().getOwner().getUsername().equals(currentUsername))
-            return true;
-
-        // Return true if item2 owner username equals logged-in user username, return false if not
-        return match.getItem2().getOwner().getUsername().equals(currentUsername);
+        // Check if current user is owner of either item in the match
+        return match.getItem1().getOwner().getUsername().equals(currentUsername) ||
+                match.getItem2().getOwner().getUsername().equals(currentUsername);
     }
 
     // Create display match
