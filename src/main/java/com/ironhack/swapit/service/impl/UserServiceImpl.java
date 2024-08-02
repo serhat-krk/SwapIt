@@ -145,10 +145,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
-// UNUSED METHOD
+// AUTHORIZATION METHOD
 
-    // Method is not used but cannot be removed since the class implements UserDetailsService
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        // Retrieve user with the given username
+        User user = userRepository.findByUsername(username);
+        // Check if user exists
+        if (user == null) {
+            log.error("User not found in the database");
+            throw new UsernameNotFoundException("User not found in the database");
+        }
+        else {
+            log.info("User found in the database: {}", username);
+            // Create a collection of SimpleGrantedAuthority objects from the user's roles
+            Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+            user.getRoles().forEach(role -> {
+                authorities.add(new SimpleGrantedAuthority(role.getName()));
+            });
+            // Return the user details, including the username, password, and authorities
+            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+        }
     }
 }

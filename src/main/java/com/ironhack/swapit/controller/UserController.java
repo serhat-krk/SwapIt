@@ -5,11 +5,15 @@ import com.ironhack.swapit.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api")
@@ -38,7 +42,7 @@ public class UserController {
 
     // Return a user by username, for logged-in user or admins
     @GetMapping("/users/{username}")
-    @PreAuthorize("#username == authentication.principal or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("#username == authentication.name or hasRole('ROLE_ADMIN')")
     public User getByUsername(@PathVariable("username") String username) {
         return userService.findByUsername(username);
     }
@@ -48,8 +52,8 @@ public class UserController {
 
     // Register a new user, public endpoint
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public User post(@RequestBody @Valid User user) {
+    @ResponseStatus(CREATED)
+    public User save(@RequestBody @Valid User user) {
         return userService.save(user);
     }
 
@@ -58,7 +62,7 @@ public class UserController {
 
     // Update all user information, for logged-in user
     @PutMapping("/users/{username}/update")
-    @PreAuthorize("#username == authentication.principal")
+    @PreAuthorize("#username == authentication.name")
     public User update(@PathVariable("username") String username, @RequestBody @Valid User updatedUser) {
         return userService.update(username, updatedUser);
     }
@@ -68,7 +72,7 @@ public class UserController {
 
     // Update user city, for logged-in user
     @PatchMapping("/users/{username}/update-city")
-    @PreAuthorize("#username == authentication.principal")
+    @PreAuthorize("#username == authentication.name")
     public User updateCity(@PathVariable("username") String username, @RequestBody @Valid String newCity) {
         return userService.updateCity(username, newCity);
     }
@@ -76,12 +80,19 @@ public class UserController {
 
 // DELETE Mappings
 
-    // TODO: HTTP 403 Error, user still in db, fix it
     // Delete user from database, for logged-in user or admins
     @DeleteMapping("/users/{username}/delete")
-    @PreAuthorize("#username == authentication.principal or hasRole('ROLE_ADMIN')")
-    public void deleteByUsername(@PathVariable("username") String username) {
-        userService.deleteByUsername(username);
+    @PreAuthorize("#username == authentication.name or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Void> deleteByUsername(@PathVariable("username") String username) {
+
+        try {
+            userService.deleteByUsername(username);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException exception) {
+            return ResponseEntity.status(FORBIDDEN).build();
+        } catch (UsernameNotFoundException exception) {
+            return ResponseEntity.status(NOT_FOUND).build();
+        }
     }
 
 }

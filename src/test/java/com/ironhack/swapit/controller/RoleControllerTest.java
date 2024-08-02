@@ -3,6 +3,7 @@ package com.ironhack.swapit.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ironhack.swapit.dto.RoleToUser;
 import com.ironhack.swapit.model.Role;
+import com.ironhack.swapit.security.SecurityConfig;
 import com.ironhack.swapit.service.RoleService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,6 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @WebMvcTest(controllers = RoleController.class)
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
+@Import(SecurityConfig.class)
 public class RoleControllerTest {
 
     @Autowired
@@ -33,6 +37,9 @@ public class RoleControllerTest {
 
     @MockBean
     private RoleService roleService;
+
+    @MockBean
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private ObjectMapper objectMapper;

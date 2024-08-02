@@ -1,6 +1,8 @@
 package com.ironhack.swapit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -20,6 +22,8 @@ import static jakarta.persistence.GenerationType.*;
 @Data
 @NoArgsConstructor
 @Table(name = "users")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
     // Properties

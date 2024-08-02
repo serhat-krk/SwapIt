@@ -256,17 +256,4 @@ public class UserServiceTest {
         verify(userRepository, times(1)).findByUsername(username);
         verify(userRepository, times(1)).deleteByUsername(username);
     }
-
-    @Test
-    void loadUserByUsername_UnusedMethod() {
-
-        // Arrange
-        String username = "anyUsername";
-
-        // Act
-        UserDetails userDetails = userService.loadUserByUsername(username);
-
-        // Assert
-        assertNull(userDetails);
-    }
 }
