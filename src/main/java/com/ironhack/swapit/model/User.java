@@ -1,21 +1,29 @@
 package com.ironhack.swapit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
-import static jakarta.persistence.FetchType.EAGER;
+import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;
 
 @Entity
 @Data
 @NoArgsConstructor
 @Table(name = "users")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
     // Properties
@@ -24,26 +32,46 @@ public class User {
     private UUID userId;
 
     @Column(unique = true)
+    @Pattern(regexp = "^[a-zA-Z1-9]*$",
+            message = "Username must only contain letters and digits")
+    @NotBlank(message = "Username cannot be blank")
     private String username;
 
     @Column
+    // TODO: Application does not run when password validations are active. Might be due to encoding.
+//    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&?!+=.,:;_-])",
+//            message = "Password must contain at least: one small letter, one capital letter, one digit, one special character")
+//    @Size(min = 8, max = 20,
+//            message = "Password length must be minimum 8 and maximum 20 characters")
     private String password;
 
-    @Column
-    private String firstName;
+    @Column(unique = true)
+    @Email(message = "Please provide a valid email address")
+    private String email;
+
+    @Column(name = "full_name")
+    @Pattern(regexp = "^[a-zA-Z ]*$",
+            message = "Name must only contain letters and blank space")
+    @NotBlank(message = "Name cannot be blank")
+    private String name;
 
     @Column
-    private String lastName;
-
-    @Column
+    @Pattern(regexp = "^[a-zA-Z ]*$",
+            message = "City must only contain letters and blank space")
+    @NotBlank(message = "City cannot be blank")
     private String city;
 
-    @ManyToMany // A user can like many items, an item can be liked by many users
+    @OneToMany(mappedBy = "owner", fetch = EAGER)
+    @JsonIgnore
+    private Collection<Item> ownedItems = new HashSet<>();
+
+    @ManyToMany(fetch = EAGER, cascade = ALL)
     @JoinTable(
             name = "item_likes",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<Item> likedItems;
+    @JsonIgnore
+    private Collection<Item> likedItems = new HashSet<>();
 
     @ManyToMany(fetch = EAGER)
     @JoinTable(
@@ -51,19 +79,16 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Collection<Role> roles = new ArrayList<>();
+    private Collection<Role> roles = new HashSet<>();
 
 
-    // Custom constructor without liked items
-    public User(String username, String password, String firstName, String lastName, String city) {
+    // Custom constructor without id, owned items, liked items, and roles
+    public User(String username, String password, String email, String name, String city) {
         this.username = username;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.email = email;
+        this.name = name;
         this.city = city;
     }
-
-
-    // Methods
 
 }

@@ -28,7 +28,7 @@ public class Match {
     private Item item2;
 
 
-    // Custom Constructors
+    // Custom Constructor
     public Match(Item item1, Item item2) {
         this.item1 = item1;
         this.item2 = item2;

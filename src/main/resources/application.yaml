@@ -12,3 +12,7 @@ spring:
 server:
   error:
     include-stacktrace: never
+#logging:
+#  level:
+#    root: DEBUG
+#    com.ironhack.swapit: DEBUG

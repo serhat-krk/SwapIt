@@ -1,8 +1,7 @@
 package com.ironhack.swapit.demo;
 
-import com.ironhack.swapit.enums.BookGenre;
-import com.ironhack.swapit.enums.ClothingCategory;
-import com.ironhack.swapit.enums.ItemCondition;
+import com.ironhack.swapit.enums.ClothingType;
+import com.ironhack.swapit.enums.ItemClass;
 import com.ironhack.swapit.model.*;
 import com.ironhack.swapit.service.ItemService;
 import com.ironhack.swapit.service.RoleService;
@@ -14,7 +13,8 @@ import org.springframework.stereotype.Component;
 
 import static com.ironhack.swapit.enums.BookGenre.*;
 import static com.ironhack.swapit.enums.ClothingCategory.*;
-import static com.ironhack.swapit.enums.ItemCondition.*;
+import static com.ironhack.swapit.enums.ClothingType.*;
+import static com.ironhack.swapit.enums.ItemClass.*;
 
 @Component
 @RequiredArgsConstructor
@@ -37,19 +37,22 @@ public class DataLoader implements CommandLineRunner {
 
 
         // Demo Users
-        var demoUser1 = new User("demouser1", "1234", "Albert", "Smith", "Madrid");
+        var demoUser1 = new User("demouser1", "Abc.1234", "demouser1@demo.com", "Albert Smith", "Madrid");
         userService.save(demoUser1);
-        var demoUser2 = new User("demouser2", "1234", "Joe", "Cole", "London");
+        var demoUser2 = new User("demouser2", "Abc.1234", "demouser2@demo.com", "Joe Cole", "London");
         userService.save(demoUser2);
-        var demoUser3 = new User("demouser3", "1234", "Hailey", "Strong", "Austin");
+        var demoUser3 = new User("demouser3", "Abc.1234", "demouser3@demo.com", "Hailey Strong", "Austin");
         userService.save(demoUser3);
-        var demoUserAdmin = new User("demouseradmin", "1234", "Chris", "River", "Berlin");
+        var demoUser5 = new User("demouser5", "Abc.1234", "demouser5@demo.com", "Alfonso Lopez", "madrid");
+        userService.save(demoUser5);
+        var demoUser6 = new User("demouser6", "Abc.1234", "demouser6@demo.com", "Victor Herrera", "Madrid");
+        userService.save(demoUser6);
+        var demoUser7 = new User("demouser7", "Abc.1234", "demouser7@demo.com", "Elizabeth", "Austin");
+        userService.save(demoUser7);
+        var demoUserAdmin = new User("demouseradmin", "Abc.1234", "demouseradmin@demo.com", "Chris River", "Berlin");
         userService.save(demoUserAdmin);
 
-        // Add Roles
-        roleService.addRoleToUser("demouser1", "ROLE_USER");
-        roleService.addRoleToUser("demouser2", "ROLE_USER");
-        roleService.addRoleToUser("demouser3", "ROLE_USER");
+        // Add Admin Role
         roleService.addRoleToUser("demouseradmin", "ROLE_ADMIN");
 
 
@@ -57,25 +60,27 @@ public class DataLoader implements CommandLineRunner {
         var demoItem1 = new Clothing(
                 "Adidas Gazelle Men Shoes 43 Grey",
                 "Only worn a few times. It's in good condition. It has a small yellow mark on the left side of the right foot.",
-                USED,
                 demoUser1,
+                CLOTHING,
                 MEN,
+                SHOES,
                 "43");
         itemService.save(demoItem1);
 
         var demoItem2 = new Clothing(
                 "Levi's 501 Black Jeans W32 L34",
-                USED,
                 demoUser2,
+                CLOTHING,
                 MEN,
+                JEANS,
                 "W32 L34");
         itemService.save(demoItem2);
 
         var demoItem3 = new Book(
                 "Game of Thrones",
                 "I received as a gift and didn't open the cover",
-                NOT_USED,
                 demoUser3,
+                BOOK,
                 "George R. R. Martin",
                 FANTASY);
         itemService.save(demoItem3);
@@ -83,27 +88,28 @@ public class DataLoader implements CommandLineRunner {
         var demoItem4 = new Book(
                 "Sapiens",
                 "No notes, no missing pages, in good condition",
-                USED,
                 demoUser3,
+                BOOK,
                 "Yuval Noah Harari",
                 HISTORY);
         itemService.save(demoItem4);
 
         var demoItem5 = new Book(
                 "Hobbit",
-                USED,
                 demoUser3,
+                BOOK,
                 "J. R. R. Tolkien",
                 FANTASY);
         itemService.save(demoItem5);
 
         var demoItem6 = new Book(
                 "Dune",
-                NOT_USED,
                 demoUser2,
+                BOOK,
                 "Frank Herbert",
                 SCIENCE_FICTION);
-        itemService.save(demoItem5);
+        itemService.save(demoItem6);
 
     }
+
 }

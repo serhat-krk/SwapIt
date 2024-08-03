@@ -1,8 +1,9 @@
 package com.ironhack.swapit.model;
 
 import com.ironhack.swapit.enums.BookGenre;
-import com.ironhack.swapit.enums.ItemCondition;
+import com.ironhack.swapit.enums.ItemClass;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -16,27 +17,26 @@ import static jakarta.persistence.EnumType.*;
 public class Book extends Item {
 
     // Properties
-    @Column
+    @Column(name = "book_author")
+    @NotBlank(message = "Author cannot be blank")
     private String author;
 
-    @Column
+    @Column(name = "book_genre")
     @Enumerated(STRING)
     private BookGenre genre;
 
 
     // Custom Constructors
-    public Book(String title, ItemCondition condition, User owner, String author, BookGenre genre) {
-        super(title, condition, owner);
+    public Book(String title, User owner, ItemClass itemClass, String author, BookGenre genre) {
+        super(title, owner, itemClass);
         this.author = author;
         this.genre = genre;
     }
 
-    public Book(String title, String description, ItemCondition condition, User owner, String author, BookGenre genre) {
-        super(title, description, condition, owner);
+    public Book(String title, String description, User owner, ItemClass itemClass, String author, BookGenre genre) {
+        super(title, description, owner, itemClass);
         this.author = author;
         this.genre = genre;
     }
 
 }
-
-

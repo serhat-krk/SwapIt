@@ -1,28 +1,33 @@
 package com.ironhack.swapit.service;
 
+import com.ironhack.swapit.dto.display.ItemDisplay;
+import com.ironhack.swapit.dto.display.RandomItemDisplay;
+import com.ironhack.swapit.dto.request.ItemRequest;
 import com.ironhack.swapit.model.Item;
-import com.ironhack.swapit.model.User;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface ItemService {
 
     // GET methods
     List<Item> findAll();
-    Optional<Item> findById(int id);
+    Optional<Item> findById(int itemId);
     List<Item> findUserItems(String username);
-    Item findRandomItem(String username);
 
-    // POST methods
+    // POST method
     Item save(Item item);
 
     // PUT methods
+    void updateBook(int itemId, ItemRequest updatedBook);
+    void updateClothing(int itemId, ItemRequest updatedClothing);
 
-    // PATCH methods
-    void like(User user, Item item);
+    // DELETE method
+    void deleteById(int itemId);
 
-    // DELETE methods
+    // Other methods
+    boolean isOwner(int itemId);
+    ItemDisplay createDisplayItem(Item item);
+    RandomItemDisplay createRandomDisplayItem(Item item);
 
 }

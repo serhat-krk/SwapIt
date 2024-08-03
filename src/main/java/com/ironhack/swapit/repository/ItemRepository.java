@@ -7,25 +7,20 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 public interface ItemRepository extends JpaRepository <Item, Integer> {
 
-    @Query(value = "SELECT * " +
-            "FROM swap_db.items i " +
-            "JOIN swap_db.users u ON i.owner_user_id = u.user_id " +
-            "WHERE u.username = :username",
-            nativeQuery = true)
-    List<Item> findUserItems(@Param("username") String username);
+    List<Item> findByOwner_Username(String username);
 
     @Query(value = "SELECT * " +
-            "FROM swap_db.items i " +
-            "JOIN swap_db.users u " +
+            "FROM items i " +
+            "JOIN users u " +
             "ON i.owner_user_id = u.user_id " +
             "WHERE u.username <> :username " +
             "ORDER BY RAND() " +
             "LIMIT 1",
             nativeQuery = true)
     Item findRandomItem(@Param("username") String username);
+
 }

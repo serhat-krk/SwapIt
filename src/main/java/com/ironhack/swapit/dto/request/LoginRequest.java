@@ -1,4 +1,4 @@
-package com.ironhack.swapit.dto;
+package com.ironhack.swapit.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class LoginRequest {
 
     private String username;
-
     private String password;
 
 }

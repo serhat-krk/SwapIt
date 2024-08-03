@@ -8,8 +8,9 @@ public interface RoleService {
 
     // GET Methods
     List<Role> findAll();
+    Role findByName(String roleName);
 
-    //  POST Methods
+    // POST Methods
     Role save(Role role);
     void addRoleToUser(String username, String roleName);
 

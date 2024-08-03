@@ -5,6 +5,7 @@ import com.ironhack.swapit.model.User;
 import com.ironhack.swapit.repository.RoleRepository;
 import com.ironhack.swapit.repository.UserRepository;
 import com.ironhack.swapit.service.RoleService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,28 +22,33 @@ public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
 
-    // GET Methods
-    @Override
+// GET Methods
+
     public List<Role> findAll() {
         log.info("Getting all roles");
         return roleRepository.findAll();
     }
 
+    public Role findByName(String roleName) {
+        return roleRepository.findByName(roleName).orElseThrow();
+    }
 
-    // POST Methods
-    @Override
+
+// POST Methods
+
+    @Transactional
     public Role save(Role role) {
         log.info("Saving new role {} to the database", role.getName());
         return roleRepository.save(role);
     }
 
-    @Override
+    @Transactional
     public void addRoleToUser(String username, String roleName) {
         log.info("Adding role {} to user {}", roleName, username);
 
         // Retrieve the user and role objects from the repository
         User user = userRepository.findByUsername(username);
-        Role role = roleRepository.findByName(roleName);
+        Role role = roleRepository.findByName(roleName).orElseThrow();
 
         // Add the role to the user's role collection
         user.getRoles().add(role);

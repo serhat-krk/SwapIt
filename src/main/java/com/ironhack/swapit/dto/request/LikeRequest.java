@@ -1,11 +1,10 @@
-package com.ironhack.swapit.dto;
+package com.ironhack.swapit.dto.request;
 
 import lombok.Data;
 
 @Data
 public class LikeRequest {
 
-    private String username;
     private int itemId;
 
 }
